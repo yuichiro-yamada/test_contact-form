@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -12,11 +14,18 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
-
-    public function register(RegisterRequest $request)
+    public function store(RegisterRequest $request)
     {
+        $userData = [
+            'name' => $request->name,
+            'email'=> $request->email,
+            'password'=> $request->password,
+        ];
+        User::create($userData);
         return view('auth.login');
     }
+
+
 
     public function loginView()
     {

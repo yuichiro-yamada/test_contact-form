@@ -80,15 +80,13 @@ class ContactController extends Controller
     public function admin()
     {
         $contacts = Contact::Paginate(10);
-
-        for ($i = 0; $i < count($contacts); $i++) {
-            $gender_type = $contacts[$i]['gender'];
-            if ($gender_type == 1) {
-                $contacts[$i]['gender'] = "男性";
-            } elseif ($gender_type == 2) {
-                $contacts[$i]['gender'] = "女性";
-            } elseif ($gender_type == 3) {
-                $contacts[$i]['gender'] = "その他";
+        foreach($contacts->items() as $contact) {
+            if ($contact->gender == 1) {
+                $contact->gender = "男性";
+            } elseif ($contact->gender == 2) {
+                $contact->gender = "女性";
+            } elseif ($contact->gender == 3) {
+                $contact->gender = "その他";
             }
         }
         return view('admin', ['contacts' => $contacts]);
@@ -97,9 +95,6 @@ class ContactController extends Controller
     public function search(Request $request)
     {
         $query = Contact::query();
-        $contacts = $request->all();
-        $model = new Contact();
-        $columnsCount = count($model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable()));
 
         $name_email_filter = $request->name_email_filter;
         $gender_dropdown = $request->gender_dropdown;
@@ -110,11 +105,12 @@ class ContactController extends Controller
             $normalized_filter = Normalizer::normalize($name_email_filter, Normalizer::FORM_C);
 
             $query->where(function ($query) use ($normalized_filter) {
-                $query->where(Contact::raw("CONCAT(last_name,first_name)"), 'like', '%' . $normalized_filter . '%');
-            })
-            ->orWhere('email', 'like', '%' . $normalized_filter . '%');
+                $query->where(DB::raw("CONCAT(last_name,first_name)"), 'like', '%' . $normalized_filter . '%')
+                    ->orWhere('email', 'like', '%' . $normalized_filter . '%');
+            });
         }
-        if (!empty($gender_dropdown)) {
+        // 性別の絞り込み（画面から「全て」が選ばれたときは絞り込まないよう考慮）
+        if (!empty($gender_dropdown)&& $gender_dropdown !== '全て') {
             $query->where('gender', $gender_dropdown);
         }
         if (!empty($category_dropdown)) {
@@ -124,22 +120,17 @@ class ContactController extends Controller
             $query->whereDate('created_at', '=', $date_calendar);
         }
 
-
-
+        // 検索条件を維持したまま10件ずつページネーション
         $contacts = $query->Paginate(10);
 
-        if (!empty($contacts)) {
-            for ($i = 0; $i < $columnsCount; $i++) {
-                if (isset($contacts[$i]['gender'])) {
-                    $gender_type = $contacts[$i]['gender'];
-                    if ($gender_type == 1) {
-                        $contacts[$i]['gender'] = "男性";
-                    } elseif ($gender_type == 2) {
-                        $contacts[$i]['gender'] = "女性";
-                    } elseif ($gender_type == 3) {
-                        $contacts[$i]['gender'] = "その他";
-                    }
-                }
+        //★★★安全な foreach 文に書き換え（items() を使用し、バグを100%回避）
+        foreach ($contacts->items() as $contact) {
+            if ($contact->gender == 1) {
+                $contact->gender = "男性";
+            } elseif ($contact->gender == 2) {
+                $contact->gender = "女性";
+            } elseif ($contact->gender == 3) {
+                $contact->gender = "その他";
             }
         }
 

@@ -27,14 +27,18 @@ Route::post('/thanks', [ContactController::class, 'store']);
 
 Route::get('/register', [AuthController::class, 'registerView']);
 
-Route::get('/login', [AuthController::class, 'loginView']);
+Route::post('/register', [AuthController::class, 'store']);
+
+/* ログインしていない状態で/adminにアクセスしてもログイン画面を表示するよう「->name('login') 」をつける */
+Route::get('/login', [AuthController::class, 'loginView'])->name('login') ;
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [ContactController::class, 'admin']);
+
+    Route::get('/admin/search', [ContactController::class, 'search']);
+
+    Route::post('/admin/delete', [ContactController::class, 'delete']);
+
+    Route::get('/admin/csv-download', [CsvDownloadController::class, 'downloadCsv']);
+
 });
-
-Route::get('/admin/search', [ContactController::class, 'search']);
-
-Route::post('/admin/delete', [ContactController::class, 'delete']);
-
-Route::get('/admin/csv-download', [CsvDownloadController::class, 'downloadCsv']);

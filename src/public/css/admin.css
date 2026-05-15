@@ -195,10 +195,6 @@ span[aria-current="page"] span{
     height:unset;
 }
 
-.hidden-column{
-    display:none;
-}
-
 .modal{
     display:none;
     position:fixed;

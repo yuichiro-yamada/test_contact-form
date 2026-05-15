@@ -67,24 +67,29 @@
                 <th class="column-name"></th>
                 <th class="column-name"></th>
             </tr>
+            <!--
+            「詳細」ボタンを押した際、一覧で見えている「お名前」や「お問い合わせ種類」も
+            モーダル側に簡単にコピーできるよう、<td> タグに識別用IDを付与
+            -->
             @foreach($contacts as $contact)
             <tr>
-                <td class="name_get{{$contact['id']}} name_get">{{$contact['last_name']}}{{$contact['first_name']}}</td>
-                <td class="gender_get{{$contact['id']}} gender_get">{{$contact['gender']}}</td>
-                <td class="email_get{{$contact['id']}} email_get">{{$contact['email']}}</td>
-                <td class="category_get{{$contact['id']}} category_get">{{$contact->category->getCategory()}}</td>
-                <td class="created_get{{$contact['id']}} created_get"><input type="hidden" value="{{$contact['created_at']}}"></td>
+                <td class="name_get" id="name-{{$contact->id}}">{{$contact->last_name}}{{$contact->first_name}}</td>
+                <td class="gender_get" id="gender-{{$contact->id}}">{{$contact->gender}}</td>
+                <td class="email_get" id="email-{{$contact->id}}">{{$contact->email}}</td>
+                <td class="category_get" id="category-{{$contact->id}}">{{$contact->category->getCategory()}}</td>
+                <td class="created_get">
+                    <input type="hidden" class="date_get{{$contact->id}}" name="date" value="{{$contact->created_at->format('Y-m-d')}}">
+                </td>
                 <td class="detail_get">
-                    <div class="detail-view" id="{{$contact['id']}}">
+                    <div class="detail-view" id="detail-btn-{{ $contact->id }}" data-id="{{ $contact->id }}">
                         詳細
                     </div>
                 </td>
-                <div class="hidden-column">
-                    <p class="tel_get{{$contact['id']}}">{{$contact['tel']}}</p>
-                    <p class="address_get{{$contact['id']}}">{{$contact['address']}}</p>
-                    <p class="building_get{{$contact['id']}}">{{$contact['building']}}</p>
-                    <p class="detail_get{{$contact['id']}}">{{$contact['detail']}}</p>
-                </div>
+                <!-- モーダルやJSで呼び出すための隠しデータ -->
+                <input type="hidden" class="tel_get{{$contact->id}}" value="{{$contact->tel}}">
+                <input type="hidden" class="address_get{{$contact->id}}" value="{{$contact->address}}">
+                <input type="hidden" class="building_get{{$contact->id}}" value="{{$contact->building}}">
+                <input type="hidden" class="detail_get{{$contact->id}}" value="{{$contact->detail}}">
             </tr>
             @endforeach
         </table>
@@ -124,7 +129,7 @@
                 </tr>
                 <tr>
                     <th class="modal-title detail-title">お問い合わせ内容</th>
-                    <td class="detail-modal modal-cell"><textarea class="detail-text-modal"></textarea></td>
+                    <td class="detail-modal modal-cell"><textarea class="detail-text-modal" readonly></textarea></td>
                 </tr>
             </table>
             <div class="delete">
