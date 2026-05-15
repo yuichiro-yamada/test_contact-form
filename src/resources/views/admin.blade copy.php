@@ -18,6 +18,7 @@
 <h1 class="page-title">Admin</h1>
 <div class="contains">
     <form action="/admin/search" method="get">
+        @csrf
         <div class="search-form">
             <div class="name-email">
                 <input name="name_email_filter" type="text" class="name_email_filter" 
@@ -53,6 +54,7 @@
     <div class="contacts-table">
         <div class="above-table">
             <form action="/admin/csv-download" method="get">
+                @csrf
                 <button type="submit" class="export">エクスポート</button>
             </form>
             <div class="pagination">
@@ -99,75 +101,78 @@
                         </button>
                     </form>
                 </td>
+                <!-- モーダルやJSで呼び出すための隠しデータ -->
+                <input type="hidden" class="tel_get{{$contact->id}}" value="{{$contact->tel}}">
+                <input type="hidden" class="address_get{{$contact->id}}" value="{{$contact->address}}">
+                <input type="hidden" class="building_get{{$contact->id}}" value="{{$contact->building}}">
+                <input type="hidden" class="detail_get{{$contact->id}}" value="{{$contact->detail}}">
             </tr>
-            <!-- モーダルやJSで呼び出すための隠しデータ -->
-            <input type="hidden" class="tel_get{{$contact->id}}" value="{{$contact->tel}}">
-            <input type="hidden" class="address_get{{$contact->id}}" value="{{$contact->address}}">
-            <input type="hidden" class="building_get{{$contact->id}}" value="{{$contact->building}}">
-            <input type="hidden" class="detail_get{{$contact->id}}" value="{{$contact->detail}}">
             @endforeach
         </table>
         <!-- 以下モーダル -->
         <!-- 💡 【修正点1】URLに modal_id がある時だけ 'active' クラスを付与して表示状態を維持する -->
         <!-- ※css側の設計に合わせて 'active' を 'show' や 'is-open' に変更してください -->
-        <div class="modal {{ request('modal_id') ? 'active' : '' }}">
+        <div class="modal {{ request()->has('modal_id') ? 'active' : '' }}">
+            <!-- 💡 【修正点2】閉じるボタンを「aタグ」にして、modal_idだけをURLから消す -->
             <a href="{{ request()->fullUrlWithQuery(['modal_id' => null]) }}" class="close-button" style="text-decoration: none; color: inherit;">
                 ×
             </a>
             <table class="modal-table">
                 <tr>
                     <th class="modal-title">お名前</th>
-                        <td class="full-name-modal modal-cell">
-                            {{ ($modal_data?->last_name ?? '') . ($modal_data?->first_name ?? '') }}
-                        </td>
+                    <!-- 💡 【修正点3】{{ }} の位置を <td> タグの中に修正 -->
+                    <td class="full-name-modal modal-cell">
+                        {{ isset($modal_data) ? $modal_data->last_name . $modal_data->first_name : '' }}
+                    </td>
                 </tr>
                 <tr>
                     <th class="modal-title">性別</th>
                     <td class="gender-modal modal-cell">
-                        {{ data_get($modal_data, 'gender', '') }}
+                        {{ $modal_data->gender ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th class="modal-title">メールアドレス</th>
                     <td class="email-modal modal-cell">
-                        {{ data_get($modal_data, 'email', '') }}
+                        {{ $modal_data->email ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th class="modal-title">電話番号</th>
                     <td class="tel-modal modal-cell">
-                        {{ data_get($modal_data, 'tel', '') }}
+                        {{ $modal_data->tel ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th class="modal-title">住所</th>
                     <td class="address-modal modal-cell">
-                        {{ data_get($modal_data, 'address', '') }}
+                        {{ $modal_data->address ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th class="modal-title">建物名</th>
                     <td class="building-modal modal-cell">
-                        {{ data_get($modal_data, 'building', '') }}
+                        {{ $modal_data->building ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th class="modal-title">お問い合わせの種類</th>
-                        <td class="category-modal modal-cell">
-                            {{ $modal_data?->category?->getCategory() ?? '' }}
-                        </td>
+                    <td class="category-modal modal-cell">
+                        {{ isset($modal_data) ? $modal_data->category->getCategory() : '' }}
+                    </td>
                 </tr>
                 <tr>
                     <th class="modal-title detail-title">お問い合わせ内容</th>
                     <td class="detail-modal modal-cell">
-                        <textarea class="detail-text-modal" readonly>{{ data_get($modal_data, 'detail', '') }}</textarea>
+                        <!-- 💡 textareaの中にデータをセット -->
+                        <textarea class="detail-text-modal" readonly>{{ $modal_data->detail ?? '' }}</textarea>
                     </td>
                 </tr>
             </table>
             <div class="delete">
                 <form action="/admin/delete" method="post">
                     @csrf
-                    <input name="id" type="hidden" value="{{ $modal_data->id ?? '' }}">
+                    <input name="id" type="hidden" value="" class="delete-id">
                     <button class="delete-button" type="submit">削除</button>
                 </form>
             </div>

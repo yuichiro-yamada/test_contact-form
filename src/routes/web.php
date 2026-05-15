@@ -32,6 +32,8 @@ Route::post('/register', [AuthController::class, 'store']);
 /* ログインしていない状態で/adminにアクセスしてもログイン画面を表示するよう「->name('login') 」をつける */
 Route::get('/login', [AuthController::class, 'loginView'])->name('login') ;
 
+Route::post('/login', [AuthController::class, 'login']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [ContactController::class, 'admin']);
 

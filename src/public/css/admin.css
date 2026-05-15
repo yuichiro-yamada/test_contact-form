@@ -207,6 +207,10 @@ span[aria-current="page"] span{
     box-shadow:1px 1px 2px;
 }
 
+.modal.active {
+    display: block;
+}
+
 .close-button{
     color:#8B7969;
     position:absolute;
