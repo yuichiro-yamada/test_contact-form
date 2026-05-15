@@ -17,7 +17,7 @@
 @section('content')
 <h1 class="page-title">Admin</h1>
 <div class="contains">
-    <form action="/admin/search" method="get">
+    <form action="/search" method="get">
         <div class="search-form">
             <div class="name-email">
                 <input name="name_email_filter" type="text" class="name_email_filter" 
@@ -27,21 +27,40 @@
             </div>
             <div class="gender">
             <select name="gender_dropdown" class="gender_dropdown">
-                <option disabled @selected(request('gender_dropdown') === null || request('gender_dropdown') === '')>性別</option>
-                <option value="0" @selected(request('gender_dropdown') === '0')>全て</option>
-                <option value="1" @selected(request('gender_dropdown') === '1')>男性</option>
-                <option value="2" @selected(request('gender_dropdown') === '2')>女性</option>
-                <option value="3" @selected(request('gender_dropdown') === '3')>その他</option>
+                <option value="" {{ request('gender_dropdown') === null || request('gender_dropdown') === '' ? 'selected' : '' }}>
+                    性別
+                </option>
+
+                <option value="0" {{ request('gender_dropdown') === '0' ? 'selected' : '' }}>
+                    全て
+                </option>
+
+                <option value="1" {{ request('gender_dropdown') === '1' ? 'selected' : '' }}>
+                    男性
+                </option>
+
+                <option value="2" {{ request('gender_dropdown') === '2' ? 'selected' : '' }}>
+                    女性
+                </option>
+
+                <option value="3" {{ request('gender_dropdown') === '3' ? 'selected' : '' }}>
+                    その他
+                </option>
             </select>
             </div>
             <div class="category_id">
             <select name="category_dropdown" class="category_dropdown">
-                <option disabled @selected(request('category_dropdown') === null || request('category_dropdown') === '')>お問い合わせ種類</option>
-                <option value="1" @selected(request('category_dropdown') === '1')>商品のお届けについて</option>
-                <option value="2" @selected(request('category_dropdown') === '2')>商品の交換について</option>
-                <option value="3" @selected(request('category_dropdown') === '3')>商品トラブル</option>
-                <option value="4" @selected(request('category_dropdown') === '4')>ショップへのお問い合わせ</option>
-                <option value="5" @selected(request('category_dropdown') === '5')>その他</option>
+                <option value="" {{ request('category_dropdown') === null || request('category_dropdown') === '' ? 'selected' : '' }}>
+                    お問い合わせ種類
+                </option>
+                @foreach($categories as $category)
+                    <option
+                        value="{{ $category->id }}"
+                        {{ request('category_dropdown') == $category->id ? 'selected' : '' }}
+                    >
+                        {{ $category->content }}
+                    </option>
+                @endforeach
             </select>
             </div>
             <div class="date">
@@ -52,7 +71,7 @@
     </form>
     <div class="contacts-table">
         <div class="above-table">
-            <form action="/admin/csv-download" method="get">
+            <form action="/export" method="get">
                 <button type="submit" class="export">エクスポート</button>
             </form>
             <div class="pagination">
@@ -83,7 +102,7 @@
                 </td>
                 <td class="detail_get">
                     <!-- 各行専用の小さなフォームを作ってサーバーに送信する -->
-                    <form action="/admin/search" method="get" style="display: inline;">
+                    <form action="/search" method="get" style="display: inline;">
                         <!-- 現在の検索条件を隠しデータ（input type="hidden"）として引き継ぐ -->
                         <input type="hidden" name="name_email_filter" value="{{ request('name_email_filter') }}">
                         <input type="hidden" name="gender_dropdown" value="{{ request('gender_dropdown') }}">
@@ -165,7 +184,7 @@
                 </tr>
             </table>
             <div class="delete">
-                <form action="/admin/delete" method="post">
+                <form action="/delete" method="post">
                     @csrf
                     <input name="id" type="hidden" value="{{ $modal_data->id ?? '' }}">
                     <button class="delete-button" type="submit">削除</button>
@@ -173,7 +192,7 @@
             </div>
         </div>
         <div class="reset">
-            <a href="/admin" class="reset-link">リセット</a>
+            <a href="/reset" class="reset-link">リセット</a>
         </div>
     </div>
 </div>

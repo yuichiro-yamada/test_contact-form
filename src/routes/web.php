@@ -37,10 +37,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [ContactController::class, 'admin']);
 
-    Route::get('/admin/search', [ContactController::class, 'search']);
+    Route::get('/search', [ContactController::class, 'search']);
 
-    Route::post('/admin/delete', [ContactController::class, 'delete']);
+    Route::get('/reset', [ContactController::class, 'reset']);
 
-    Route::get('/admin/csv-download', [CsvDownloadController::class, 'downloadCsv']);
+    Route::post('/delete', [ContactController::class, 'delete']);
+
+    Route::get('/export', [ContactController::class, 'export']);
 
 });

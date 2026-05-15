@@ -81,6 +81,9 @@ class ContactController extends Controller
     {
         $contacts = Contact::with('category')->Paginate(10);
 
+        // カテゴリマスタ取得
+        $categories = Category::all();
+
         $modal_data = null;
 
         if ($request->modal_id) {
@@ -97,11 +100,13 @@ class ContactController extends Controller
                 $contact->gender = "その他";
             }
         }
-        return view('admin', compact('contacts', 'modal_data'));
+        return view('admin', compact('contacts', 'modal_data','categories'));
     }
 
     public function search(Request $request)
     {
+        $categories = Category::all();
+
         $query = Contact::with('category');
 
         $name_email_filter = $request->name_email_filter;
@@ -177,8 +182,6 @@ class ContactController extends Controller
                 }
             }
         }
-
-
         return view('admin', [
             'name_email_filter' => $name_email_filter,
             'gender_dropdown' => $gender_dropdown,
@@ -186,13 +189,91 @@ class ContactController extends Controller
             'date_calendar' => $date_calendar,
             'contacts' => $contacts,
             'modal_data' => $modal_data,
+            'categories' => $categories,
         ]);
     }
+
+    public function reset()
+    {
+        return redirect('/admin');
+    }
+
 
     public function delete(Request $request)
     {
         $contact = Contact::findOrFail($request->id);
         $contact->delete();
         return redirect('/admin');
+    }
+
+    public function export(Request $request)
+    {
+        $query = Contact::with('category');
+
+        // 名前・メール検索
+        if (!empty($request->name_email_filter)) {
+            $query->where(function ($q) use ($request) {
+                $q->where('first_name', 'like', '%' . $request->name_email_filter . '%')
+                ->orWhere('last_name', 'like', '%' . $request->name_email_filter . '%')
+                ->orWhere('email', 'like', '%' . $request->name_email_filter . '%');
+            });
+        }
+
+        // 性別
+        if (!empty($request->gender_dropdown)) {
+            $query->where('gender', $request->gender_dropdown);
+        }
+
+        // カテゴリ
+        if (!empty($request->category_dropdown)) {
+            $query->where('category_id', $request->category_dropdown);
+        }
+
+        // 日付
+        if (!empty($request->date_calendar)) {
+            $query->whereDate('created_at', $request->date_calendar);
+        }
+
+        $contacts = $query->get();
+
+        $fileName = 'contacts.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename={$fileName}",
+        ];
+
+        $callback = function () use ($contacts) {
+
+            $stream = fopen('php://output', 'w');
+
+            // Excel文字化け対策
+            fwrite($stream, "\xEF\xBB\xBF");
+
+            // ヘッダー行
+            fputcsv($stream, [
+                'お名前',
+                '性別',
+                'メールアドレス',
+                'お問い合わせ種類',
+                '登録日',
+            ]);
+
+            // データ行
+            foreach ($contacts as $contact) {
+
+                fputcsv($stream, [
+                    $contact->last_name . $contact->first_name,
+                    $contact->gender,
+                    $contact->email,
+                    $contact->category->getCategory(),
+                    $contact->created_at->format('Y-m-d'),
+                ]);
+            }
+
+            fclose($stream);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

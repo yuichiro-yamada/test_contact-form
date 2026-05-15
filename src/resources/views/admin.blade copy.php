@@ -17,7 +17,7 @@
 @section('content')
 <h1 class="page-title">Admin</h1>
 <div class="contains">
-    <form action="/admin/search" method="get">
+    <form action="/search" method="get">
         @csrf
         <div class="search-form">
             <div class="name-email">
