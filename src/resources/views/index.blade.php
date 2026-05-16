@@ -15,19 +15,27 @@
                     <th class="column-name">お名前<span class="attention">※</span></th>
                     <td id="name" class="table-cell">
                         <div class="name-separate">
-                            <input class="input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}" >
-                            <input class="input-area" type="text" name="first_name" placeholder="例）太郎" value="{{ old('first_name') }}">
-                        </div>
-                        <div class="error-message name_error">
-                            <div class="last_name_error">
-                                @error('last_name')
-                                {{$message}}
-                                @enderror
+                            <div class="input-wrapper">
+                                <input class="input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}" >
+                                <div class="error-message name_error">
+                                    <div>
+                                        <div class="last_name_error">
+                                            @error('last_name')
+                                            {{$message}}
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="first_name_error">
-                                @error('first_name')
-                                {{$message}}
-                                @enderror
+                            <div class="input-wrapper">
+                                <input class="input-area" type="text" name="first_name" placeholder="例）太郎" value="{{ old('first_name') }}">
+                                <div class="error-message name_error">
+                                    <div class="first_name_error">
+                                        @error('first_name')
+                                        {{$message}}
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -76,6 +84,7 @@
                     <th class="column-name">電話番号<span class="attention">※</span></th>
                     <td id="tel" class="table-cell">
                         <div id="tel-align">
+
                             <input class="input-area tel-input" name="front-tel"
                                 value="{{ old('front-tel', request('front-tel')) }}">
 
@@ -89,14 +98,22 @@
                             <input class="input-area tel-input" name="back-tel"
                                 value="{{ old('back-tel', request('back-tel')) }}">
                         </div>
-                        <div class="error-message">
-                        @if($errors->has('front-tel'))
-                                {{ $errors->first('front-tel') }}
-                        @elseif($errors->has('middle-tel'))
-                                {{ $errors->first('middle-tel') }}
-                            @elseif($errors->has('back-tel'))
-                            {{ $errors->first('back-tel') }}
-                        @endif
+                        <div id="tel-align">
+                            <div class="input-area tel-input error-message">
+                                @if($errors->has('front-tel'))
+                                    {{ $errors->first('front-tel') }}
+                                @endif
+                            </div>
+                            <div class="input-area tel-input error-message">
+                                @if($errors->has('middle-tel'))
+                                    {{ $errors->first('middle-tel') }}
+                                @endif
+                            </div>
+                            <div class="input-area tel-input error-message">
+                                @if($errors->has('back-tel'))
+                                    {{ $errors->first('back-tel') }}
+                                @endif
+                            </div>
                         </div>
                     </td>
                 </tr>

@@ -43,7 +43,12 @@ textarea::placeholder {
     width: 550px;
 }
 
-.input-area {
+.input-wrapper {
+    width: 45%;
+}
+
+#name .input-area {
+    width: 100% ;
     outline: none;
     background: #f5f5f5;
     border: none;
@@ -57,10 +62,10 @@ textarea::placeholder {
     justify-content: space-between;
 }
 
-#name input,
+
 .last_name_error,
 .first_name_error {
-    width: 45%;
+    width: 100%;
 }
 
 .last_name_error,
@@ -167,4 +172,5 @@ textarea::placeholder {
 
 .error-message {
     color: red;
+    text-align: left;
 }
