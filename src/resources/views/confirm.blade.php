@@ -51,7 +51,7 @@
             <tr class="table-line">
                 <th class="column-name">お問い合わせの種類</th>
                 <td class="table-cell">
-                    <input class="read-input" name="category_id" type="text" value="{{$contact['category_id']}}" readonly>
+                    <input class="read-input" name="category_id" type="text" value="{{$category->content}}" readonly>
                 </td>
             </tr>
             <tr class="table-line">

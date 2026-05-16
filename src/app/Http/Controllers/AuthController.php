@@ -20,7 +20,7 @@ class AuthController extends Controller
         $userData = [
             'name' => $request->name,
             'email'=> $request->email,
-            'password'=> $request->password,
+            'password'=> Hash::make($request->password),
         ];
         User::create($userData);
         return view('auth.login');

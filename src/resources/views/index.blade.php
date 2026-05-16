@@ -15,7 +15,7 @@
                     <th class="column-name">お名前<span class="attention">※</span></th>
                     <td id="name" class="table-cell">
                         <div class="name-separate">
-                            <input class="input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}">
+                            <input class="input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}" >
                             <input class="input-area" type="text" name="first_name" placeholder="例）太郎" value="{{ old('first_name') }}">
                         </div>
                         <div class="error-message name_error">
@@ -103,6 +103,12 @@
                     <th class="column-name">お問い合わせの種類<span class="attention">※</span></th>
                     <td class="table-cell">
                         <div id="category">
+                            <!--カテゴリ選択-->
+                            <select name="category_id" class="input-area category-select">
+                                <!--カテゴリ選択部分を共通化-->
+                                <x-category-select :categories="$categories" />
+                            </select>
+                            <!--
                             <select class="input-area category-select" name="category_id" value="{{old('category_id')}}">
                                 <option selected disabled>選択してください</option>
                                 <option value="商品のお届けについて">1.商品のお届けについて</option>
@@ -111,6 +117,7 @@
                                 <option value="ショップへのお問い合わせ">4.ショップへのお問い合わせ</option>
                                 <option value="その他">5.その他</option>
                             </select>
+                            -->
                         </div>
                         <div class="error-message">
                             @error('category_id')

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Category;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -14,25 +15,21 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $param=[
-            'content'=>'商品のお届けについて',
+        // 登録したい5つのカテゴリデータをID固定で定義
+        $categories = [
+            ['id' => 1, 'content' => '商品のお届けについて'],
+            ['id' => 2, 'content' => '商品の交換について'],
+            ['id' => 3, 'content' => '商品トラブル'],
+            ['id' => 4, 'content' => 'ショップへのお問い合わせ'],
+            ['id' => 5, 'content' => 'その他'],
         ];
-        DB::table('categories')->insert($param);
-        $param=[
-            'content'=>'商品の交換について',
-        ];
-        DB::table('categories')->insert($param);
-        $param=[
-            'content'=>'商品トラブル',
-        ];
-        DB::table('categories')->insert($param);
-        $param=[
-            'content'=>'ショップへのお問い合わせ',
-        ];
-        DB::table('categories')->insert($param);
-        $param=[
-            'content'=>'その他',
-        ];
-        DB::table('categories')->insert($param);
+
+        foreach ($categories as $category) {
+            // すでにIDが存在する場合は上書き、なければ新規作成（重複エラー防止）
+            Category::updateOrCreate(
+                ['id' => $category['id']],
+                ['content' => $category['content']]
+            );
+        }
     }
 }

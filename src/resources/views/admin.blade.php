@@ -49,19 +49,11 @@
             </select>
             </div>
             <div class="category_id">
-            <select name="category_dropdown" class="category_dropdown">
-                <option value="" {{ request('category_dropdown') === null || request('category_dropdown') === '' ? 'selected' : '' }}>
-                    お問い合わせ種類
-                </option>
-                @foreach($categories as $category)
-                    <option
-                        value="{{ $category->id }}"
-                        {{ request('category_dropdown') == $category->id ? 'selected' : '' }}
-                    >
-                        {{ $category->content }}
-                    </option>
-                @endforeach
-            </select>
+                <!--カテゴリ選択-->
+                <select name="category_dropdown" class="category_dropdown">
+                    <!--カテゴリ選択部分を共通化-->
+                    <x-category-select :categories="$categories" />
+                </select>
             </div>
             <div class="date">
                 <input type="date" name="date_calendar" class="date_calendar" 

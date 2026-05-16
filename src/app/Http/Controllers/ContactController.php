@@ -14,12 +14,14 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $categories = Category::all();
+        return view('index',compact('categories'));
     }
 
     public function confirm(ContactRequest $request)
     {
         $contact = $request->all();
+        $category = Category::find($request->category_);
 
         $frontTel = implode(",", $request->only(['front-tel']));
         $middleTel = implode(",", $request->only(['middle-tel']));
@@ -30,7 +32,7 @@ class ContactController extends Controller
         $firstName = implode(",", $request->only(['first_name']));
         $fullName = $lastName . " " . $firstName;
 
-        return view('confirm', ['contact' => $contact, 'entireTel' => $entireTel, 'fullName' => $fullName]);
+        return view('confirm', compact('contact','entireTel','fullName','categories'));
     }
 
     public function store(Request $request)
