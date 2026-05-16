@@ -21,7 +21,7 @@ class ContactController extends Controller
     public function confirm(ContactRequest $request)
     {
         $contact = $request->all();
-        $category = Category::find($request->category_);
+        $category = Category::find($request->category_id);
 
         $frontTel = implode(",", $request->only(['front-tel']));
         $middleTel = implode(",", $request->only(['middle-tel']));
@@ -32,7 +32,16 @@ class ContactController extends Controller
         $firstName = implode(",", $request->only(['first_name']));
         $fullName = $lastName . " " . $firstName;
 
-        return view('confirm', compact('contact','entireTel','fullName','categories'));
+    // 1. 性別のマッピング配列を定義
+    $genderList = [
+        '1' => '男性',
+        '2' => '女性',
+        '3' => 'その他',
+    ];
+
+    $genderName = $genderList[$request->gender];
+
+        return view('confirm', compact('contact','entireTel','fullName','category','genderName'));
     }
 
     public function store(Request $request)
@@ -52,28 +61,6 @@ class ContactController extends Controller
             'building',
             'detail',
         ]);
-
-        $genderType = implode(",", $request->only('gender'));
-        if ($genderType == "男性") {
-            $contact['gender'] = 1;
-        } elseif ($genderType == "女性") {
-            $contact['gender'] = 2;
-        } elseif ($genderType == "その他") {
-            $contact['gender'] = 3;
-        }
-
-        $categoryType = implode(",", $request->only(['category_id']));
-        if ($categoryType == "商品のお届けについて") {
-            $contact['category_id'] = 1;
-        } elseif ($categoryType == "商品の交換について") {
-            $contact['category_id'] = 2;
-        } elseif ($categoryType == "商品トラブル") {
-            $contact['category_id'] = 3;
-        } elseif ($categoryType == "ショップへのお問い合わせ") {
-            $contact['category_id'] = 4;
-        } elseif ($categoryType == "その他") {
-            $contact['category_id'] = 5;
-        }
 
         Contact::create($contact);
         return view('thanks');

@@ -68,8 +68,12 @@ textarea::placeholder {
     color: red;
 }
 
-#gender {
+.gender {
     display: flex;
+}
+
+.radio-item-wrapper {
+    width: 100%;
 }
 
 .radio-item {

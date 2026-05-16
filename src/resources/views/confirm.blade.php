@@ -14,14 +14,15 @@
                 <th class="column-name">お名前</th>
                 <td class="table-cell">
                     <input class="read-input" name="full-name" type="text" value="{{ $fullName }}" readonly>
-                    <input type="hidden" name="last_name" value="{{ $contact['last_name'] }}" readonly>
-                    <input type="hidden" name="first_name" value="{{ $contact['first_name'] }}" readonly>
+                    <input type="hidden" name="last_name" value="{{ $contact['last_name'] }}">
+                    <input type="hidden" name="first_name" value="{{ $contact['first_name'] }}">
                 </td>
             </tr>
             <tr class="table-line">
                 <th class="column-name">性別</th>
                 <td class="table-cell">
-                    <input class="read-input" name="gender" value="{{$contact['gender']}}" readonly>
+                    <input class="read-input" value="{{$genderName}}" readonly>
+                    <input type="hidden" name="gender" value="{{$contact['gender']}}">
                 </td>
             </tr>
             <tr class="table-line">
@@ -34,6 +35,9 @@
                 <th class="column-name">電話番号</th>
                 <td class="table-cell">
                     <input class="read-input" name="tel" type="tel" value="{{ $entireTel }}" readonly>
+                    <input type="hidden" name="front-tel" value="{{ $contact['front-tel'] }}">
+                    <input type="hidden" name="middle-tel" value="{{ $contact['middle-tel'] }}">
+                    <input type="hidden" name="back-tel" value="{{ $contact['back-tel'] }}">
                 </td>
             </tr>
             <tr class="table-line">
@@ -52,6 +56,7 @@
                 <th class="column-name">お問い合わせの種類</th>
                 <td class="table-cell">
                     <input class="read-input" name="category_id" type="text" value="{{$category->content}}" readonly>
+                    <input type="hidden" name="category_id" value="{{ $contact['category_id'] }}">
                 </td>
             </tr>
             <tr class="table-line">

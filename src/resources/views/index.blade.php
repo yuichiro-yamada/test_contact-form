@@ -7,7 +7,7 @@
 @section('content')
 <h1 class="page-title">Contact</h1>
 <div class="input-contact">
-    <form action="/confirm" method="post">
+    <form action="/confirm" method="post" novalidate>
         @csrf
         <div class="form-area">
             <table class="index-table" cellpadding="10">
@@ -34,25 +34,32 @@
                 </tr>
                 <tr class="table-line">
                     <th class="column-name">性別<span class="attention">※</span></th>
-                    <td id="gender" class="table-cell">
-                        <div class="radio-item">
-                            <input class="input-area gender-radio" type="radio" name="gender" value="男性" checked>
-                            <label>男性</label>
+                    <td class="table-cell">
+                        <div class="gender">
+                            <div class="radio-item">
+                                <input class="input-area gender-radio" type="radio" name="gender" value="1" 
+                                    {{ old('gender', request('gender')) == '1' ? 'checked' : '' }}>
+                                <label>男性</label>
+                            </div>
+                            <div class="radio-item">
+                                <input class="input-area gender-radio" type="radio" name="gender" value="2" 
+                                    {{ old('gender', request('gender')) == '2' ? 'checked' : '' }}>
+                                <label>女性</label>
+                            </div>
+                            <div class="radio-item">
+                                <input class="input-area gender-radio" type="radio" name="gender" value="3" 
+                                {{ old('gender', request('gender')) == '3' ? 'checked' : '' }}>
+                                <label>その他</label>
+                            </div>
                         </div>
-                        <div class="radio-item">
-                            <input class="input-area gender-radio" type="radio" name="gender" value="女性">
-                            <label>女性</label>
-                        </div>
-                        <div class="radio-item">
-                            <input class="input-area gender-radio" type="radio" name="gender" value="その他">
-                            <label>その他</label>
-                        </div></br>
                         <div class="error-message">
                             @error('gender')
                             {{$message}}
                             @enderror
                         </div>
                     </td>
+
+
                 </tr>
                 <tr class="table-line">
                     <th class="column-name">メールアドレス<span class="attention">※</span></th>
@@ -69,16 +76,27 @@
                     <th class="column-name">電話番号<span class="attention">※</span></th>
                     <td id="tel" class="table-cell">
                         <div id="tel-align">
-                            <input class="input-area tel-input" name="front-tel" value="{{old('front-tel')}}">
+                            <input class="input-area tel-input" name="front-tel"
+                                value="{{ old('front-tel', request('front-tel')) }}">
+
                             <span class="tel-bou">-</span>
-                            <input class="input-area tel-input" name="middle-tel" value="{{old('middle-tel')}}">
+
+                            <input class="input-area tel-input" name="middle-tel"
+                                value="{{ old('middle-tel', request('middle-tel')) }}">
+
                             <span class="tel-bou">-</span>
-                            <input class="input-area tel-input" name="back-tel" value="{{old('back-tel')}}">
+
+                            <input class="input-area tel-input" name="back-tel"
+                                value="{{ old('back-tel', request('back-tel')) }}">
                         </div>
                         <div class="error-message">
-                            @if($errors->has('front-tel') || $errors->has('middle-tel') || $errors->has('back-tel') )
-                            電話番号を入力してください
-                            @endif
+                        @if($errors->has('front-tel'))
+                                {{ $errors->first('front-tel') }}
+                        @elseif($errors->has('middle-tel'))
+                                {{ $errors->first('middle-tel') }}
+                            @elseif($errors->has('back-tel'))
+                            {{ $errors->first('back-tel') }}
+                        @endif
                         </div>
                     </td>
                 </tr>
@@ -105,19 +123,22 @@
                         <div id="category">
                             <!--カテゴリ選択-->
                             <select name="category_id" class="input-area category-select">
-                                <!--カテゴリ選択部分を共通化-->
-                                <x-category-select :categories="$categories" />
+
+                                <option value=""
+                                    {{ old('category_id', request('category_id')) == '' ? 'selected' : '' }}>
+                                    選択してください
+                                </option>
+
+                                @foreach($categories as $category)
+                                    <option
+                                        value="{{ $category->id }}"
+                                        {{ old('category_id', request('category_id')) == $category->id ? 'selected' : '' }}
+                                    >
+                                        {{ $category->content }}
+                                    </option>
+                                @endforeach
+
                             </select>
-                            <!--
-                            <select class="input-area category-select" name="category_id" value="{{old('category_id')}}">
-                                <option selected disabled>選択してください</option>
-                                <option value="商品のお届けについて">1.商品のお届けについて</option>
-                                <option value="商品の交換について">2.商品の交換について</option>
-                                <option value="商品トラブル">3.商品トラブル</option>
-                                <option value="ショップへのお問い合わせ">4.ショップへのお問い合わせ</option>
-                                <option value="その他">5.その他</option>
-                            </select>
-                            -->
                         </div>
                         <div class="error-message">
                             @error('category_id')
