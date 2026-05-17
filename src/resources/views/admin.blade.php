@@ -64,7 +64,7 @@
             </div>
             <div class="date">
                 <input type="date" name="date_calendar" class="date_calendar" 
-                    value="{{ request('date_calendar', '') }}">
+                    value="{{ request('date_calendar', '') }}" onclick="this.showPicker()">
             </div>
             <button type="submit" class="submit-button form-btn">検索</button>
             <button type="button" class="reset-button form-btn" onclick="location.href='/reset'">リセット</button>
@@ -112,11 +112,30 @@
                     
                     <!-- モーダルで表示したいIDを送信 -->
                     <input type="hidden" name="modal_id" value="{{ $contact->id }}">
+
+
+
                     
-                    <!-- ボタン（見た目はCSSで今まで通りに調整してください） -->
-                    <button type="submit" class="detail-view">
-                        詳細
-                    </button>
+<!-- 一覧テーブルの中の詳細ボタン部分 -->
+<form action="/search" method="GET" style="display:inline;">
+    <!-- 💡 重要：現在のページの検索条件とページ番号をすべて裏で引き継ぐ -->
+    @foreach(request()->query() as $key => $value)
+        @if($key !== 'id' && $key !== 'open_modal')
+            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+        @endif
+    @endforeach
+
+    <!-- 詳細ボタンを押した時だけ送信されるデータ -->
+    <input type="hidden" name="id" value="{{ $contact->id }}">
+    <input type="hidden" name="open_modal" value="true">
+
+    <button type="submit" class="detail-view">
+        詳細
+    </button>
+</form>
+
+
+
                 </form>
             </td>
         </tr>
@@ -187,6 +206,12 @@
             <form action="/delete" method="post">
                 @csrf
                 <input name="id" type="hidden" value="{{ $modal_data->id ?? '' }}">
+                <!-- 💡 追加：現在の検索条件とページ番号をすべて裏側で送信する -->
+                <input type="hidden" name="page" value="{{ request('page') }}">
+                <input type="hidden" name="name_email_filter" value="{{ request('name_email_filter') }}">
+                <input type="hidden" name="gender_dropdown" value="{{ request('gender_dropdown') }}">
+                <input type="hidden" name="category_dropdown" value="{{ request('category_dropdown') }}">
+                <input type="hidden" name="date_calendar" value="{{ request('date_calendar') }}">
                 <button class="delete-button" type="submit">削除</button>
             </form>
         </div>

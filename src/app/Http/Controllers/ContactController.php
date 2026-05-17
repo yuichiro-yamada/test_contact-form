@@ -192,7 +192,14 @@ class ContactController extends Controller
     {
         $contact = Contact::findOrFail($request->id);
         $contact->delete();
-        return redirect('/admin');
+        
+        // 1. 送られてきたデータから「削除したデータのID」や「モーダル用のデータ」を除外する
+        $queryParams = $request->except(['id', 'modal_id', 'open_modal']);
+
+        // 2. 直前に検索していた元のURL（パラメータを除く部分）を取得する
+        // 例: http://localhost/search や http://localhost/admin などを自動取得
+        $previousUrl = parse_url(url()->previous(), PHP_URL_PATH);
+        return redirect($previousUrl . '?' . http_build_query($queryParams));
     }
 
     public function export(Request $request)

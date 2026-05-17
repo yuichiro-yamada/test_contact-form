@@ -19,12 +19,10 @@
 <div class="contains">
     <form action="/search" method="get">
         <div class="search-form">
-            <div class="name-email">
+
                 <input name="name_email_filter" type="text" class="name_email_filter" 
                     placeholder="名前やメールアドレスを入力してください" 
                     value="{{ request('name_email_filter', '') }}">
-                <input type="submit" value="🔍" class="search-button">
-            </div>
             <div class="gender">
                 <select name="gender_dropdown" class="gender_dropdown">
                     <option value="" {{ request('gender_dropdown') === null || request('gender_dropdown') === '' ? 'selected' : '' }}>
@@ -66,13 +64,10 @@
             </div>
             <div class="date">
                 <input type="date" name="date_calendar" class="date_calendar" 
-                    value="{{ request('date_calendar', '') }}">
+                    value="{{ request('date_calendar', '') }}" onclick="this.showPicker()">
             </div>
-            <button type="submit" value="検索">
-            <button type="submit" value="検索">
-            <div class="reset">
-                <a href="/reset" class="reset-link">リセット</a>
-            </div>
+            <button type="submit" class="submit-button form-btn">検索</button>
+            <button type="button" class="reset-button form-btn" onclick="location.href='/reset'">リセット</button>
         </div>
 
         <div class="contacts-table">
@@ -119,7 +114,7 @@
                     <input type="hidden" name="modal_id" value="{{ $contact->id }}">
                     
                     <!-- ボタン（見た目はCSSで今まで通りに調整してください） -->
-                    <button type="submit" class="detail-view" style="border: none; background: none; cursor: pointer;">
+                    <button type="submit" class="detail-view">
                         詳細
                     </button>
                 </form>
@@ -192,12 +187,15 @@
             <form action="/delete" method="post">
                 @csrf
                 <input name="id" type="hidden" value="{{ $modal_data->id ?? '' }}">
+                <!-- 💡 追加：現在の検索条件とページ番号をすべて裏側で送信する -->
+                <input type="hidden" name="page" value="{{ request('page') }}">
+                <input type="hidden" name="name_email_filter" value="{{ request('name_email_filter') }}">
+                <input type="hidden" name="gender_dropdown" value="{{ request('gender_dropdown') }}">
+                <input type="hidden" name="category_dropdown" value="{{ request('category_dropdown') }}">
+                <input type="hidden" name="date_calendar" value="{{ request('date_calendar') }}">
                 <button class="delete-button" type="submit">削除</button>
             </form>
         </div>
-    </div>
-    <div class="reset">
-        <a href="/reset" class="reset-link">リセット</a>
     </div>
 </div>
 @endsection
