@@ -9,32 +9,28 @@
 <div class="input-contact">
     <form action="/confirm" method="post" novalidate>
         @csrf
-        <div class="form-area">
+
             <table class="index-table" cellpadding="10">
                 <tr class="table-line">
                     <th class="column-name">お名前<span class="attention">※</span></th>
-                    <td id="name" class="table-cell">
+                    <td class="table-cell">
                         <div class="name-separate">
-                            <div class="input-wrapper">
-                                <input class="input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}">
-                                <div class="error-message name_error">
-                                    <div>
-                                        <div class="last_name_error">
-                                            @error('last_name')
-                                            {{$message}}
-                                            @enderror
-                                        </div>
-                                    </div>
+                            <div class="name-wrap">
+                                <input class="name-input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}">
+
+                                <div class="error-message">
+                                    @error('last_name')
+                                    {{$message}}
+                                    @enderror
                                 </div>
+
                             </div>
-                            <div class="input-wrapper">
-                                <input class="input-area" type="text" name="first_name" placeholder="例）太郎" value="{{ old('first_name') }}">
-                                <div class="error-message name_error">
-                                    <div class="first_name_error">
-                                        @error('first_name')
-                                        {{$message}}
-                                        @enderror
-                                    </div>
+                            <div class="name-wrap">
+                                <input class="name-input-area" type="text" name="first_name" placeholder="例）太郎" value="{{ old('first_name') }}">
+                                <div class="error-message">
+                                    @error('first_name')
+                                    {{$message}}
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -45,19 +41,25 @@
                     <td class="table-cell">
                         <div class="gender">
                             <div class="radio-item">
-                                <input class="input-area gender-radio" type="radio" name="gender" value="1" 
-                                    {{ old('gender', request('gender')) == '1' ? 'checked' : '' }}>
-                                <label>男性</label>
+                                <label>
+                                    <input class="input-area gender-radio" type="radio" name="gender" value="1" 
+                                        {{ old('gender', request('gender')) == '1' ? 'checked' : '' }}>
+                                    <span>男性</span>
+                                </label>
                             </div>
                             <div class="radio-item">
-                                <input class="input-area gender-radio" type="radio" name="gender" value="2" 
-                                    {{ old('gender', request('gender')) == '2' ? 'checked' : '' }}>
-                                <label>女性</label>
+                                <label>
+                                    <input class="input-area gender-radio" type="radio" name="gender" value="2" 
+                                        {{ old('gender', request('gender')) == '2' ? 'checked' : '' }}>
+                                    <span>女性</span>
+                                </label>
                             </div>
                             <div class="radio-item">
-                                <input class="input-area gender-radio" type="radio" name="gender" value="3" 
-                                {{ old('gender', request('gender')) == '3' ? 'checked' : '' }}>
-                                <label>その他</label>
+                                <label>
+                                    <input class="input-area gender-radio" type="radio" name="gender" value="3" 
+                                    {{ old('gender', request('gender')) == '3' ? 'checked' : '' }}>
+                                    <span>その他</span>
+                                </label>
                             </div>
                         </div>
                         <div class="error-message">
@@ -72,7 +74,7 @@
                 <tr class="table-line">
                     <th class="column-name">メールアドレス<span class="attention">※</span></th>
                     <td id="email" class="table-cell">
-                        <input class="input-area email-input" type="email" name="email" placeholder="test@example.com" value="{{old('email')}}">
+                        <input class="input-area " type="email" name="email" placeholder="test@example.com" value="{{old('email')}}">
                         <div class="error-message">
                             @error('email')
                             {{$message}}
@@ -82,39 +84,36 @@
                 </tr>
                 <tr class="table-line">
                     <th class="column-name">電話番号<span class="attention">※</span></th>
-                    <td id="tel" class="table-cell">
-                        <div id="tel-align">
-
-                            <input class="input-area tel-input" name="front-tel"
-                                value="{{ old('front-tel', request('front-tel')) }}">
-
-                            <span class="tel-bou">-</span>
-
-                            <input class="input-area tel-input" name="middle-tel"
-                                value="{{ old('middle-tel', request('middle-tel')) }}">
-
-                            <span class="tel-bou">-</span>
-
-                            <input class="input-area tel-input" name="back-tel"
-                                value="{{ old('back-tel', request('back-tel')) }}">
-                        </div>
-                        <div id="tel-align">
-                            <div class="input-area tel-input error-message">
-                                @if($errors->has('front-tel'))
-                                    {{ $errors->first('front-tel') }}
-                                @endif
+                    <td class="table-cell">
+                        <div class="tel-align">
+                            <div class="tel-wrap">
+                                <input class="tel-input" name="front-tel"
+                                    value="{{ old('front-tel', request('front-tel')) }}">
+                                <div class="tel-error-area error-message">
+                                    @if($errors->has('front-tel'))
+                                        {{ $errors->first('front-tel') }}
+                                    @endif
+                                </div>
                             </div>
-                            <span class="tel-bou"> </span>
-                            <div class="input-area tel-input error-message">
-                                @if($errors->has('middle-tel'))
-                                    {{ $errors->first('middle-tel') }}
-                                @endif
+                            <span class="tel-bou">-</span>
+                            <div class="tel-wrap">
+                                <input class="tel-input" name="middle-tel"
+                                    value="{{ old('middle-tel', request('middle-tel')) }}">
+                                <div class="tel-error-area error-message">
+                                    @if($errors->has('middle-tel'))
+                                        {{ $errors->first('middle-tel') }}
+                                    @endif
+                                </div>
                             </div>
-                            <span class="tel-bou"> </span>
-                            <div class="input-area tel-input error-message">
-                                @if($errors->has('back-tel'))
-                                    {{ $errors->first('back-tel') }}
-                                @endif
+                            <span class="tel-bou">-</span>
+                            <div class="tel-wrap">
+                                <input class="tel-input" name="back-tel"
+                                    value="{{ old('back-tel', request('back-tel')) }}">
+                                <div class="tel-error-area error-message">
+                                    @if($errors->has('back-tel'))
+                                        {{ $errors->first('back-tel') }}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -132,16 +131,16 @@
                 </tr>
                 <tr class="table-line">
                     <th class="column-name">建物名</th>
-                    <td id="building" class="table-cell">
-                        <input class="input-area building-input" type="text" name="building" placeholder="例）千駄ヶ谷マンション101" value="{{old('building')}}">
+                    <td class="table-cell">
+                        <input class="input-area" type="text" name="building" placeholder="例）千駄ヶ谷マンション101" value="{{old('building')}}">
                     </td>
                 </tr>
                 <tr class="table-line">
                     <th class="column-name">お問い合わせの種類<span class="attention">※</span></th>
                     <td class="table-cell">
-                        <div id="category">
+                        <div class="category">
                             <!--カテゴリ選択-->
-                            <select name="category_id" class="input-area category-select">
+                            <select name="category_id" class="category-select">
 
                                 <option value=""
                                     {{ old('category_id', request('category_id')) == '' ? 'selected' : '' }}>
@@ -168,8 +167,8 @@
                 </tr>
                 <tr class="table-line">
                     <th id="align-up" class="column-name">お問い合わせ内容<span class="attention">※</span></th>
-                    <td id="detail" class="table-cell">
-                        <textarea class="input-area detail-text" name="detail" placeholder="お問い合わせ内容をご記載ください">{{old('detail')}}</textarea>
+                    <td class="table-cell">
+                        <textarea class="input-text-area detail-text" name="detail" placeholder="お問い合わせ内容をご記載ください">{{old('detail')}}</textarea>
                         <div class="error-message">
                             @error('detail')
                             {{$message}}
@@ -181,7 +180,7 @@
             <div class="submit-form">
                 <button class="confirm_button" type="submit">確認画面</button>
             </div>
-        </div>
+
     </form>
 </div>
 @endsection

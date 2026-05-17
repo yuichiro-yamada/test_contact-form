@@ -23,7 +23,8 @@ textarea::placeholder {
 }
 
 .index-table {
-    width: 90%
+    margin:0 auto;
+    width: 90%;
 }
 
 .table-line {
@@ -43,18 +44,26 @@ textarea::placeholder {
     width: 550px;
 }
 
-.input-wrapper {
-    width: 45%;
-}
-
-#name .input-area {
-    width: 100% ;
+.name-input-area {
+    width: 100%;
+    box-sizing: border-box;
     outline: none;
     background: #f5f5f5;
     border: none;
-    height: 25px;
+    height: 40px;
     margin: 0;
-    padding-left: 15px;
+    padding: 7px 30px;
+}
+
+.input-area {
+    width:100%;
+    box-sizing: border-box;   /* paddingをwidthの内側に含める設定 */
+    outline: none;
+    background: #f5f5f5;
+    border: none;
+    height: 40px;
+    margin: 0;
+    padding: 7px 30px;
 }
 
 .name-separate {
@@ -62,6 +71,9 @@ textarea::placeholder {
     justify-content: space-between;
 }
 
+.name-wrap{
+    width:45%;
+}
 
 .last_name_error,
 .first_name_error {
@@ -87,65 +99,102 @@ textarea::placeholder {
     place-items: center start;
 }
 
-.gender-radio {
-    margin-right: 20px;
-}
-
-.email-input {
+.tel-align {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    /* 両端に引き離す */
     width: 100%;
 }
 
-#tel-align {
+.tel-wrap{
+    width:30%;
+}
+
+.tel-input {
+    /* flex: 1; を削除し、パーセントで幅を固定する */
+    width: 100%;
+    text-align: center;
+    outline: none;
+    background: #f5f5f5;
+    border: none;
+    height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.tel-bou {
+    width: 4%;
+    /* ハイフンの幅を％にして全体の計算に含める */
+    text-align: center;
+    flex-shrink: 0;
+    margin-top:7px;
+}
+
+.tel-error-wrap {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 
-.tel-input {
-    width: 32%;
+.tel-error-area {
+    width 25%;
+    box-sizing: border-box;  /* 念のため枠線や余白の計算を狂わせない設定を追加 */
     text-align: center;
+    /* 任意：エラー文字を中央寄せにする場合 */
+    outline: none;
+    border: none;
+    margin: 0;
 }
 
-.tel-bou {
-    width: 4%;
-    text-align: center;
-}
-
-.address-input {
-    width: 100%;
-}
-
-.building-input {
-    width: 100%;
-}
-
-#category {
+.category {
     position: relative;
+    width:45%;
 }
 
-#category::before {
+.category::before {
+    width: 50%;
     content: "";
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 10px 10px 0 10px;
-    border-color: #BAA899;
+    border-color: #82756A transparent transparent transparent;
     position: absolute;
     top: 50%;
-    right: 52%;
+    right: 15%;
     transform: translateY(-50%);
     pointer-events: none;
 }
 
 .category-select {
-    width: 50%;
+    width: 90%;
+    outline: none;
     -webkit-appearance: none;
     appearance: none;
-    padding-left: 5px;
+    background: #f5f5f5;
+    border: none;
+    height: 39px;
+    margin: 0;
+    padding: 7px 30px;
+    box-sizing: border-box;
+}
+
+.input-text-area {
+    width: 100%;
+    /* 92%から100%に変更して枠いっぱいに広げる */
+    box-sizing: border-box;
+    /* paddingをwidthの内側に含める設定を追加 */
+    outline: none;
+    background: #f5f5f5;
+    border: none;
+
+    margin: 0;
+    padding: 7px 30px;
 }
 
 .detail-text {
-    height: 80px;
+    height: 150px;
     width: 100%;
     padding-top: 15px;
     resize: none;
@@ -171,6 +220,58 @@ textarea::placeholder {
 }
 
 .error-message {
+    width:100%;
     color: red;
     text-align: left;
 }
+
+.radio-item {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+/* デフォルトのラジオボタンを非表示 */
+.gender-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* ラジオボタンのカスタム外枠 */
+.gender-radio+span {
+    position: relative;
+    padding-left: 1.6em;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+/* ラジオボタンの丸（未選択時） */
+.gender-radio+span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.2em;
+    height: 1.2em;
+    border: 2px solid #BAA899;
+    border-radius: 50%;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+/* 選択している時の状態（塗りつぶし） */
+.gender-radio:checked+span::before {
+    background-color: #82756A;
+}
+
+.radio-item .gender-radio {
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+}
+
+

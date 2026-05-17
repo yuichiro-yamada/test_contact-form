@@ -19,46 +19,55 @@
 <div class="contains">
     <form action="/search" method="get">
         <div class="search-form">
-            <div class="name-email">
+
                 <input name="name_email_filter" type="text" class="name_email_filter" 
                     placeholder="名前やメールアドレスを入力してください" 
                     value="{{ request('name_email_filter', '') }}">
-                <input type="submit" value="🔍" class="search-button">
-            </div>
             <div class="gender">
-            <select name="gender_dropdown" class="gender_dropdown">
-                <option value="" {{ request('gender_dropdown') === null || request('gender_dropdown') === '' ? 'selected' : '' }}>
-                    性別
-                </option>
+                <select name="gender_dropdown" class="gender_dropdown">
+                    <option value="" {{ request('gender_dropdown') === null || request('gender_dropdown') === '' ? 'selected' : '' }}>
+                        性別
+                    </option>
 
-                <option value="0" {{ request('gender_dropdown') === '0' ? 'selected' : '' }}>
-                    全て
-                </option>
+                    <option value="0" {{ request('gender_dropdown') === '0' ? 'selected' : '' }}>
+                        全て
+                    </option>
 
-                <option value="1" {{ request('gender_dropdown') === '1' ? 'selected' : '' }}>
-                    男性
-                </option>
+                    <option value="1" {{ request('gender_dropdown') === '1' ? 'selected' : '' }}>
+                        男性
+                    </option>
 
-                <option value="2" {{ request('gender_dropdown') === '2' ? 'selected' : '' }}>
-                    女性
-                </option>
+                    <option value="2" {{ request('gender_dropdown') === '2' ? 'selected' : '' }}>
+                        女性
+                    </option>
 
-                <option value="3" {{ request('gender_dropdown') === '3' ? 'selected' : '' }}>
-                    その他
-                </option>
-            </select>
+                    <option value="3" {{ request('gender_dropdown') === '3' ? 'selected' : '' }}>
+                        その他
+                    </option>
+                </select>
             </div>
             <div class="category_id">
                 <!--カテゴリ選択-->
                 <select name="category_dropdown" class="category_dropdown">
-                    <!--カテゴリ選択部分を共通化-->
-                    <x-category-select :categories="$categories" />
+                    <option value="" {{ request('category_dropdown') === null || request('category_dropdown') === '' ? 'selected' : '' }}>
+                        お問い合わせ種類
+                    </option>
+                    @foreach($categories as $category)
+                        <option
+                            value="{{ $category->id }}"
+                            {{ request('category_dropdown') == $category->id ? 'selected' : '' }}
+                        >
+                            {{ $category->content }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
             <div class="date">
                 <input type="date" name="date_calendar" class="date_calendar" 
                     value="{{ request('date_calendar', '') }}">
             </div>
+            <button type="submit" class="submit-button form-btn">検索</button>
+            <button type="button" class="reset-button form-btn" onclick="location.href='/reset'">リセット</button>
         </div>
 
         <div class="contacts-table">
@@ -105,7 +114,7 @@
                     <input type="hidden" name="modal_id" value="{{ $contact->id }}">
                     
                     <!-- ボタン（見た目はCSSで今まで通りに調整してください） -->
-                    <button type="submit" class="detail-view" style="border: none; background: none; cursor: pointer;">
+                    <button type="submit" class="detail-view">
                         詳細
                     </button>
                 </form>
@@ -181,9 +190,6 @@
                 <button class="delete-button" type="submit">削除</button>
             </form>
         </div>
-    </div>
-    <div class="reset">
-        <a href="/reset" class="reset-link">リセット</a>
     </div>
 </div>
 @endsection

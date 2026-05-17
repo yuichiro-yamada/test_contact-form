@@ -29,11 +29,9 @@
 }
 
 .name_email_filter{
-    width:30%;
-    height: 40px;
-    /* 高さを明示的に指定 */
-    box-sizing: border-box;
-    /* 追加：高さを完全に統一する */
+    width:450px;
+
+
 }
 
 .name_email_filter,
@@ -41,7 +39,7 @@
 .category_dropdown{
     outline:none;
     border:1px solid #c0c0c0;
-    padding:10px 30px 10px 10px;
+    padding:10px 30px;
     -webkit-appearance: none;
     appearance: none;
 }
@@ -49,12 +47,7 @@
 .date_calendar{
     outline:none;
     border:1px solid #c0c0c0;
-    padding:10px 30px 10px 10px;
-}
-
-.date_calendar::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
+    padding:10px 30px;
 }
 
 .gender_dropdown,
@@ -87,36 +80,17 @@
 }
 
 .submit-button {
-    background: #685E55;
+    background: #82756A !important;
     /* 背景色を#82756Aに固定（!importantで競合を防止） */
     color: #fff;
     /* 文字色を白にする */
-    width:80px;
-    height: 40px;
+    height: 44px;
     /* テキストボックスの高さ（44px）に合わせる */
     box-sizing: border-box;
     /* パディングを高さに含める設定 */
-    border: none;
-        /* 通常時の外枠（ボーダー）を消す */
-        outline: none;
-        /* クリック時などの選択線を消す */
 }
 
-.reset-button {
-     background: #A39588;
-     /* 背景色を#82756Aに固定（!importantで競合を防止） */
-     color: #fff;
-     /* 文字色を白にする */
-     width: 80px;
-     height: 40px;
-     /* テキストボックスの高さ（44px）に合わせる */
-     box-sizing: border-box;
-     /* パディングを高さに含める設定 */
-     border: none;
-     /* 通常時の外枠（ボーダー）を消す */
-     outline: none;
-     /* クリック時などの選択線を消す */
- }
+
 
 .contacts-table{
     border-collapse: collapse;
@@ -156,7 +130,7 @@
 
 .export{
     outline:none;
-    background:#E2D8CC;
+    background:#f5f5f5;
     padding:5px 10px;
     border:solid 1px #c0c0c0;
 }
@@ -176,14 +150,6 @@ span[aria-label="&laquo;"]{
     padding: 3px;
     border:solid 1px #BAA899;
     text-align: center;
-    
-}
-
-span[aria-current="page"],
-span[aria-current="page"] span {
-    background: #82756A !important;  /* 現在のページの背景色 */
-    border-color: #82756A !important;/* 現在のページの枠線色 */
-    color: #fff !important;          /* 現在のページの文字色 */
 }
 
 svg{
@@ -226,19 +192,21 @@ span[aria-current="page"] span{
     border:solid 1px #BAA899;
     text-align:center;
 }
-
-.reset{
-    margin-top:40px;
-    text-align:center;
-}
-
-.reset-link{
-    outline:none;
-    border:none;
-    padding:10px 30px;
-    color:#fff;
-    background:#82756A;
-    height:unset;
+.form-btn {
+    display: inline-block;
+    outline: none;
+    border: none;
+    padding: 10px 30px;
+    /* 他の入力ボックスと同じ上下10px、左右30px */
+    height: 44px;
+    /* 高さを明示的に固定 */
+    box-sizing: border-box;
+    color: #fff;
+    background: #82756A;
+    cursor: pointer;
+    font-size: 14px;
+    /* 文字サイズはお好みで調整してください */
+    vertical-align: middle;
 }
 
 .modal{
