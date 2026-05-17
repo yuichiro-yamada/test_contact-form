@@ -199,30 +199,48 @@ class ContactController extends Controller
     {
         $query = Contact::with('category');
 
-        // 名前・メール検索
-        if (!empty($request->name_email_filter)) {
-            $query->where(function ($q) use ($request) {
-                $q->where('first_name', 'like', '%' . $request->name_email_filter . '%')
-                ->orWhere('last_name', 'like', '%' . $request->name_email_filter . '%')
-                ->orWhere('email', 'like', '%' . $request->name_email_filter . '%');
+        $name_email_filter = $request->name_email_filter;
+        $gender_dropdown = $request->gender_dropdown;
+        $category_dropdown = $request->category_dropdown;
+        $date_calendar = $request->date_calendar;
+
+        // 1. 名前・メール検索（searchメソッドと完全に同一のロジックに修正）
+        if (!empty($name_email_filter)) {
+            $normalized_filter = Normalizer::normalize(
+                $name_email_filter,
+                Normalizer::FORM_C
+            );
+
+            $query->where(function ($query) use ($normalized_filter) {
+                $query->where(
+                    DB::raw("CONCAT(last_name, first_name)"),
+                    'like',
+                    '%' . $normalized_filter . '%'
+                )
+                ->orWhere(
+                    'email',
+                    'like',
+                    '%' . $normalized_filter . '%'
+                );
             });
         }
 
-        // 性別
-        if (!empty($request->gender_dropdown)) {
-            $query->where('gender', $request->gender_dropdown);
+        // 2. 性別の絞り込み（画面から「全て(0)」が選ばれたときは絞り込まない）
+        if (!empty($gender_dropdown) && $gender_dropdown !== '0') {
+            $query->where('gender', $gender_dropdown);
         }
 
-        // カテゴリ
-        if (!empty($request->category_dropdown)) {
-            $query->where('category_id', $request->category_dropdown);
+        // 3. カテゴリ
+        if (!empty($category_dropdown)) {
+            $query->where('category_id', $category_dropdown);
         }
 
-        // 日付
-        if (!empty($request->date_calendar)) {
-            $query->whereDate('created_at', $request->date_calendar);
+        // 4. 日付
+        if (!empty($date_calendar)) {
+            $query->whereDate('created_at', '=', $date_calendar);
         }
 
+        // 全件ではなく、絞り込んだ結果を取得（exportなのでpaginateではなくget）
         $contacts = $query->get();
 
         $fileName = 'contacts.csv';
@@ -233,7 +251,6 @@ class ContactController extends Controller
         ];
 
         $callback = function () use ($contacts) {
-
             $stream = fopen('php://output', 'w');
 
             // Excel文字化け対策
@@ -245,18 +262,25 @@ class ContactController extends Controller
                 '性別',
                 'メールアドレス',
                 'お問い合わせ種類',
-                '登録日',
             ]);
+
+            // 性別のマッピング配列
+            $genderList = [
+                '1' => '男性',
+                '2' => '女性',
+                '3' => 'その他',
+            ];
 
             // データ行
             foreach ($contacts as $contact) {
+                // 性別の数値をテキスト（男性/女性/その他）に変換
+                $genderName = $genderList[$contact->gender] ?? '不明';
 
                 fputcsv($stream, [
-                    $contact->last_name . $contact->first_name,
-                    $contact->gender,
+                    $contact->last_name . ' ' . $contact->first_name, // 半角スペースを挟む場合は適宜調整してください
+                    $genderName, // 変換後のテキストを出力
                     $contact->email,
-                    $contact->category->getCategory(),
-                    $contact->created_at->format('Y-m-d'),
+                    $contact->category ? $contact->category->content : '', // もしくは $contact->category->getCategory() 等リレーションに応じて調整
                 ]);
             }
 
