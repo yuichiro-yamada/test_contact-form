@@ -11,7 +11,7 @@
 @section('content')
 <h1>Login</h1>
 <div class="login-form">
-    <form action="/login" method="post">
+    <form action="/login" method="post" novalidate>
         @csrf
         <div class="login-info">
             <p>メールアドレス</p>

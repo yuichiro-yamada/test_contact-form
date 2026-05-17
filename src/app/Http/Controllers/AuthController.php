@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         // 3. ログイン失敗：エラーメッセージを伴ってログイン画面に戻す
         return back()->withErrors([
-            'login_error' => 'メールアドレスまたはパスワードが正しくありません。',
+            'password' => 'ログイン情報が登録されていません',
         ])->onlyInput('email');
     }
 }

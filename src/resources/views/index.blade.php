@@ -16,7 +16,7 @@
                     <td id="name" class="table-cell">
                         <div class="name-separate">
                             <div class="input-wrapper">
-                                <input class="input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}" >
+                                <input class="input-area" type="text" name="last_name" placeholder="例）山田" value="{{ old('last_name') }}">
                                 <div class="error-message name_error">
                                     <div>
                                         <div class="last_name_error">
@@ -104,11 +104,13 @@
                                     {{ $errors->first('front-tel') }}
                                 @endif
                             </div>
+                            <span class="tel-bou"> </span>
                             <div class="input-area tel-input error-message">
                                 @if($errors->has('middle-tel'))
                                     {{ $errors->first('middle-tel') }}
                                 @endif
                             </div>
+                            <span class="tel-bou"> </span>
                             <div class="input-area tel-input error-message">
                                 @if($errors->has('back-tel'))
                                     {{ $errors->first('back-tel') }}

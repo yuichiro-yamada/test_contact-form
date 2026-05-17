@@ -24,8 +24,8 @@ class ContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'last_name' => ['required'],
-            'first_name' => ['required'],
+            'last_name' => ['required', 'string', 'regex:/^[^0-9０-９]+$/u', 'max:8'],
+            'first_name' => ['required', 'string', 'regex:/^[^0-9０-９]+$/u', 'max:8'],
             'gender' => ['required'],
             'email' => ['required', 'email'],
             'front-tel'  => ['required', 'string', 'regex:/^[0-9]+$/', 'max:5'],
@@ -42,6 +42,10 @@ class ContactRequest extends FormRequest
         return [
             'last_name.required' => '姓を入力してください',
             'first_name.required' => '名を入力してください',
+            'last_name.regex' => '姓は数字は入力できません',
+            'first_name.regex' => '名は数字は入力できません',
+            'last_name.max' => '姓は8文字以内で入力してください',
+            'first_name.max' => '名は8文字以内で入力してください',
             'gender.required' => '性別を選択してください',
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => 'メールアドレスはメール形式で入力してください',

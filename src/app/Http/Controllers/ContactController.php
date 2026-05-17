@@ -68,7 +68,7 @@ class ContactController extends Controller
 
     public function admin(Request $request)
     {
-        $contacts = Contact::with('category')->Paginate(10);
+        $contacts = Contact::with('category')->Paginate(7);
 
         // カテゴリマスタ取得
         $categories = Category::all();
@@ -137,7 +137,7 @@ class ContactController extends Controller
             $query->whereDate('created_at', '=', $date_calendar);
         }
         // 検索条件を維持したまま10件ずつページネーション
-        $contacts = $query->paginate(10);
+        $contacts = $query->paginate(7);
 
         //★★★安全な foreach 文に書き換え（items() を使用し、バグを100%回避）
         foreach ($contacts->items() as $contact) {

@@ -118,9 +118,8 @@
             <input type="hidden" class="detail_get{{$contact->id}}" value="{{$contact->detail}}">
             @endforeach
         </table>
-        <!-- 以下モーダル -->
-        <!-- 💡 【修正点1】URLに modal_id がある時だけ 'active' クラスを付与して表示状態を維持する -->
-        <!-- ※css側の設計に合わせて 'active' を 'show' や 'is-open' に変更してください -->
+
+        <!-- モーダル表示 -->
         <div class="modal {{ request('modal_id') ? 'active' : '' }}">
             <a href="{{ request()->fullUrlWithQuery(['modal_id' => null]) }}" class="close-button" style="text-decoration: none; color: inherit;">
                 ×
@@ -171,7 +170,7 @@
                 <tr>
                     <th class="modal-title detail-title">お問い合わせ内容</th>
                     <td class="detail-modal modal-cell">
-                        <textarea class="detail-text-modal" readonly>{{ data_get($modal_data, 'detail', '') }}</textarea>
+                        <div class="detail-text-modal">{{ data_get($modal_data, 'detail', '') }}</div>
                     </td>
                 </tr>
             </table>

@@ -85,12 +85,13 @@
     border-collapse: collapse;
 }
 
-.contacts-database{
-    width:100%;
+.contacts-database {
+    width: 100%;
+    border: solid 1px #c0c0c0;
 }
 
-.contacts-database{
-    border:solid 1px #c0c0c0;
+.contacts-database tr:has(td):hover {
+    background-color: #f5f5f5;
 }
 
 .column-name{
@@ -237,10 +238,8 @@ span[aria-current="page"] span{
 }
 
 .detail-text-modal{
-    outline:none;
-    resize:none;
-    border:none;
-    background:transparent;
+    width:100%;
+    min-height:100px;
     font-family:sans-serif;
 }
 

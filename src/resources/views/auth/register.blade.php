@@ -11,7 +11,7 @@
 @section('content')
 <h1>Register</h1>
 <div class="register-form">
-    <form action="/register" method="post">
+    <form action="/register" method="post" novalidate>>
         @csrf
         <div class="register-info">
             <p>お名前</p>
