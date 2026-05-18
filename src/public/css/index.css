@@ -34,6 +34,7 @@ textarea::placeholder {
 .column-name {
     text-align: left;
     width: 40%;
+    vertical-align: top;
 }
 
 .attention {
@@ -123,7 +124,7 @@ textarea::placeholder {
     box-sizing: border-box;
 }
 
-.tel-bou {
+.tel-tel-separator {
     width: 4%;
     /* ハイフンの幅を％にして全体の計算に含める */
     text-align: center;
@@ -200,15 +201,11 @@ textarea::placeholder {
     resize: none;
 }
 
-#align-up {
-    vertical-align: top;
-}
-
 .submit-form {
     text-align: center;
 }
 
-.confirm_button {
+.confirm-button {
     outline: none;
     border: none;
     padding: 10px 30px;
@@ -274,4 +271,10 @@ textarea::placeholder {
     padding: 0 !important;
 }
 
-
+.input-box:-webkit-autofill,
+.input-box:-webkit-autofill:hover,
+.input-box:-webkit-autofill:focus {
+    /* 内側の影を使って、背景色を白（#ffffff）で塗りつぶす */
+    -webkit-box-shadow: 0 0 0px 1000px #f5f5f5 inset;
+    -webkit-text-fill-color: #82756A;
+}

@@ -27,7 +27,6 @@ class RegisterRequest extends FormRequest
             'name' => ['required'],
             'email' => ['required', 'email','unique:users,email'],
             'password' => ['required'],
-            'password_confirmation' => ['required']
         ];
     }
 
@@ -39,7 +38,6 @@ class RegisterRequest extends FormRequest
             'email.email' => "メールアドレスはメール形式で入力してください",
             'email.unique' => "このメールアドレスは既に登録されています",  /* 追加機能　*/
             "password.required" => "パスワードを入力してください",
-            "password_confirmation.required" => "確認用パスワードを入力してください",
         ];
     }
 }

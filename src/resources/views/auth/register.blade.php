@@ -11,11 +11,11 @@
 @section('content')
 <h1>Register</h1>
 <div class="register-form">
-    <form action="/register" method="post" novalidate>>
+    <form action="/register" method="post" novalidate>
         @csrf
         <div class="register-info">
             <p>お名前</p>
-            <input name="name" type="text" placeholder="例: 山田 太郎" value="{{old('name')}}">
+            <input class="input-box" name="name" type="text" placeholder="例: 山田 太郎" value="{{old('name')}}">
             <div class="error-message">
                 @error('name')
                 {{$message}}
@@ -24,7 +24,7 @@
         </div>
         <div class="register-info">
             <p>メールアドレス</p>
-            <input name="email" type="email" placeholder="例: test@exapmple.com" value="{{old('email')}}">
+            <input class="input-box" name="email" type="email" placeholder="例: test@exapmple.com" value="{{old('email')}}">
             <div class="error-message">
                 @error('email')
                 {{$message}}
@@ -36,15 +36,6 @@
             <input name="password" type="password" placeholder="例: coachtech1106">
             <div class="error-message">
                 @error('password')
-                {{$message}}
-                @enderror
-            </div>
-        </div>
-        <div class="register-info">
-            <p>確認用パスワード</p>
-            <input name="password_confirmation" type="password" placeholder="確認用パスワード">
-            <div class="error-message">
-                @error('password_confirmation')
                 {{$message}}
                 @enderror
             </div>

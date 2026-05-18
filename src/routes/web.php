@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminContactController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CsvDownloadController;
 use App\Models\Contact;
@@ -27,7 +28,7 @@ Route::post('/thanks', [ContactController::class, 'store']);
 
 Route::get('/register', [AuthController::class, 'registerView']);
 
-Route::post('/register', [AuthController::class, 'store']);
+Route::post('/register', [AuthController::class, 'register']);
 
 /* ログインしていない状態で/adminにアクセスしてもログイン画面を表示するよう「->name('login') 」をつける */
 Route::get('/login', [AuthController::class, 'loginView'])->name('login') ;
@@ -35,14 +36,14 @@ Route::get('/login', [AuthController::class, 'loginView'])->name('login') ;
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', [ContactController::class, 'admin']);
+    Route::get('/admin', [AdminContactController::class, 'admin']);
 
-    Route::get('/search', [ContactController::class, 'search']);
+    Route::get('/search', [AdminContactController::class, 'search']);
 
-    Route::get('/reset', [ContactController::class, 'reset']);
+    Route::get('/reset', [AdminContactController::class, 'reset']);
 
-    Route::post('/delete', [ContactController::class, 'delete']);
+    Route::post('/delete', [AdminContactController::class, 'delete']);
 
-    Route::get('/export', [ContactController::class, 'export']);
+    Route::get('/export', [AdminContactController::class, 'export']);
 
 });

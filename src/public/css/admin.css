@@ -249,6 +249,7 @@ span[aria-current="page"] span{
     background-color:#FFFFFF;
     border: 1px solid #8B7969;
     box-shadow:1px 1px 2px;
+    z-index: 20000;
 }
 
 .modal.active {
@@ -258,9 +259,24 @@ span[aria-current="page"] span{
 .close-button{
     color:#8B7969;
     position:absolute;
-    right:40px;
-    top:40px;
+    right:30px;
+    top:30px;
+    text-decoration: none;
     cursor:pointer;
+    z-index: 20001;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    /* 丸の幅 */
+    height: 32px;
+    /* 丸の高さ（幅と合わせる） */
+    border: 1px solid #8B7969;
+    /* 枠線の太さと色 */
+    border-radius: 50%;
+    /* これで完全な丸にする */
+    background: transparent;
+    /* 背景を透明に */
 }
 
 .modal-title{

@@ -10,7 +10,7 @@
     margin-bottom:30px;
 }
 
-.confirm-table{
+.confirm-contact{
     width:80%;
     margin:0 auto;
 }
@@ -25,8 +25,30 @@
     resize:none;
 }
 
+.read-text {
+    display: inline-block;
+    /* 👈 これによって2行目以降もpaddingが正常に効きます */
+    width: 80%;
+    padding: 15px 30px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    /* 👈 余白を含めた横幅を正確に計算する安全装置 */
+    vertical-align: middle;
+}
+
+/* お問い合わせ内容（複数行）の専用スタイル */
+.text-area-view {
+    line-height: 1.6;
+    /* 行間を少し広げて読みやすくします */
+    white-space: normal;
+    /* 文字の折り返しを正常化します */
+    vertical-align: top;
+    /* お問い合わせ内容の文字をセルの「上揃え」にします */
+}
+
 .confirm-table{
-    width:90%
+    width: 90%;
+    margin: 0 auto;
 }
 
 .table-line{
@@ -49,8 +71,8 @@
 }
 
 
-.toThanks,
-.toFix{
+.submit-button,
+.back-button{
     outline:none;
     border:none;
     padding:10px 30px;
@@ -62,13 +84,14 @@
     text-align:center;
 }
 
-.toThanks{
+
+.submit-button{
     color:#fff;
     background:#82756A;
     margin:40px 0;
 }
 
-.toFix{
+.back-button{
     color:#BAA899;
     background:#fff;
     border:solid 1px #82756A;

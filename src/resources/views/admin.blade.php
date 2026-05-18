@@ -28,19 +28,15 @@
                     <option value="" {{ request('gender_dropdown') === null || request('gender_dropdown') === '' ? 'selected' : '' }}>
                         性別
                     </option>
-
                     <option value="0" {{ request('gender_dropdown') === '0' ? 'selected' : '' }}>
                         全て
                     </option>
-
                     <option value="1" {{ request('gender_dropdown') === '1' ? 'selected' : '' }}>
                         男性
                     </option>
-
                     <option value="2" {{ request('gender_dropdown') === '2' ? 'selected' : '' }}>
                         女性
                     </option>
-
                     <option value="3" {{ request('gender_dropdown') === '3' ? 'selected' : '' }}>
                         その他
                     </option>
@@ -66,8 +62,8 @@
                 <input type="date" name="date_calendar" class="date_calendar" 
                     value="{{ request('date_calendar', '') }}" onclick="this.showPicker()">
             </div>
-            <button type="submit" class="submit-button form-btn">検索</button>
-            <button type="button" class="reset-button form-btn" onclick="location.href='/reset'">リセット</button>
+            <button type="submit" class="submit-button">検索</button>
+            <button type="button" class="reset-button" onclick="location.href='/reset'">リセット</button>
         </div>
 
         <div class="contacts-table">
@@ -88,10 +84,6 @@
             <th class="column-name"></th>
             <th class="column-name"></th>
         </tr>
-        <!--
-        「詳細」ボタンを押した際、一覧で見えている「お名前」や「お問い合わせ種類」も
-        モーダル側に簡単にコピーできるよう、<td> タグに識別用IDを付与
-        -->
         @foreach($contacts as $contact)
         <tr>
             <td class="name_get" id="name-{{$contact->id}}">{{$contact->last_name}}{{$contact->first_name}}</td>
@@ -108,34 +100,24 @@
                     <input type="hidden" name="name_email_filter" value="{{ request('name_email_filter') }}">
                     <input type="hidden" name="gender_dropdown" value="{{ request('gender_dropdown') }}">
                     <input type="hidden" name="category_dropdown" value="{{ request('category_dropdown') }}">
-                    <input type="hidden" name="date_calendar" value="{{ request('date_calendar') }}">
-                    
+                    <input type="hidden" name="date_calendar" value="{{ request('date_calendar') }}">                    
                     <!-- モーダルで表示したいIDを送信 -->
                     <input type="hidden" name="modal_id" value="{{ $contact->id }}">
-
-
-
-                    
-<!-- 一覧テーブルの中の詳細ボタン部分 -->
-<form action="/search" method="GET" style="display:inline;">
-    <!-- 💡 重要：現在のページの検索条件とページ番号をすべて裏で引き継ぐ -->
-    @foreach(request()->query() as $key => $value)
-        @if($key !== 'id' && $key !== 'open_modal')
-            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-        @endif
-    @endforeach
-
-    <!-- 詳細ボタンを押した時だけ送信されるデータ -->
-    <input type="hidden" name="id" value="{{ $contact->id }}">
-    <input type="hidden" name="open_modal" value="true">
-
-    <button type="submit" class="detail-view">
-        詳細
-    </button>
-</form>
-
-
-
+                    <!-- 一覧テーブルの中の詳細ボタン部分 -->
+                    <form action="/search" method="GET" style="display:inline;">
+                        <!-- 💡 重要：現在のページの検索条件とページ番号をすべて裏で引き継ぐ -->
+                        @foreach(request()->query() as $key => $value)
+                            @if($key !== 'id' && $key !== 'open_modal')
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endif
+                        @endforeach
+                        <!-- 詳細ボタンを押した時だけ送信されるデータ -->
+                        <input type="hidden" name="id" value="{{ $contact->id }}">
+                        <input type="hidden" name="open_modal" value="true">
+                        <button type="submit" class="detail-view">
+                            詳細
+                        </button>
+                    </form>
                 </form>
             </td>
         </tr>

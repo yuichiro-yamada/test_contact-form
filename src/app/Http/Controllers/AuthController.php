@@ -15,7 +15,7 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
-    public function store(RegisterRequest $request)
+    public function register(RegisterRequest $request)
     {
         $userData = [
             'name' => $request->name,

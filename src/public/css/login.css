@@ -68,3 +68,11 @@ h1 {
 .error-message {
     color: red;
 }
+
+.input-box:-webkit-autofill,
+.input-box:-webkit-autofill:hover,
+.input-box:-webkit-autofill:focus {
+    /* 内側の影を使って、背景色を白（#ffffff）で塗りつぶす */
+    -webkit-box-shadow: 0 0 0px 1000px #f5f5f5 inset;
+    -webkit-text-fill-color: #82756A;
+}
