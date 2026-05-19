@@ -9,21 +9,20 @@
 @if(Auth::check())
 <form action="/logout" method="post">
     @csrf
-    <button type="submit" class="logout">Logout</button>
+    <button type="submit" class="logout-button">Logout</button>
 </form>
 @endif
 @endsection
 
 @section('content')
 <h1 class="page-title">Admin</h1>
-<div class="contains">
+<div class="admin-container">
     <form action="/search" method="get">
-        <div class="search-form">
-
-                <input name="name_email_filter" type="text" class="name_email_filter" 
+        <div class="search-fields">
+                <input name="name_email_filter" type="text" class="name_email_filter input-box" 
                     placeholder="名前やメールアドレスを入力してください" 
                     value="{{ request('name_email_filter', '') }}">
-            <div class="gender">
+            <div class="gender-wrapper">
                 <select name="gender_dropdown" class="gender_dropdown">
                     <option value="" {{ request('gender_dropdown') === null || request('gender_dropdown') === '' ? 'selected' : '' }}>
                         性別
@@ -42,7 +41,7 @@
                     </option>
                 </select>
             </div>
-            <div class="category_id">
+            <div class="category-wrapper">
                 <!--カテゴリ選択-->
                 <select name="category_dropdown" class="category_dropdown">
                     <option value="" {{ request('category_dropdown') === null || request('category_dropdown') === '' ? 'selected' : '' }}>
@@ -58,24 +57,24 @@
                     @endforeach
                 </select>
             </div>
-            <div class="date">
+            <div class="date-wrapper">
                 <input type="date" name="date_calendar" class="date_calendar" 
                     value="{{ request('date_calendar', '') }}" onclick="this.showPicker()">
             </div>
             <button type="submit" class="submit-button">検索</button>
+
             <button type="button" class="reset-button" onclick="location.href='/reset'">リセット</button>
         </div>
 
-        <div class="contacts-table">
-            <div class="above-table">
+            <div class="table-actions">
                 <button type="submit" class="export" formaction="/export">エクスポート</button>
-                <div class="pagination">
+                <div class="pagination-wrapper">
                     {{$contacts->appends(request()->query())->links()}}
                 </div>
             </div>
-        </div>
+
     </form>
-    <table class="contacts-database" cellspacing="0">
+    <table class="contacts-table" cellspacing="0">
         <tr>
             <th class="column-name">お名前</th>
             <th class="column-name">性別</th>
@@ -96,37 +95,25 @@
             <td class="detail_get">
                 <!-- 各行専用の小さなフォームを作ってサーバーに送信する -->
                 <form action="/search" method="get" style="display: inline;">
-                    <!-- 現在の検索条件を隠しデータ（input type="hidden"）として引き継ぐ -->
-                    <input type="hidden" name="name_email_filter" value="{{ request('name_email_filter') }}">
-                    <input type="hidden" name="gender_dropdown" value="{{ request('gender_dropdown') }}">
-                    <input type="hidden" name="category_dropdown" value="{{ request('category_dropdown') }}">
-                    <input type="hidden" name="date_calendar" value="{{ request('date_calendar') }}">                    
                     <!-- モーダルで表示したいIDを送信 -->
                     <input type="hidden" name="modal_id" value="{{ $contact->id }}">
-                    <!-- 一覧テーブルの中の詳細ボタン部分 -->
-                    <form action="/search" method="GET" style="display:inline;">
-                        <!-- 💡 重要：現在のページの検索条件とページ番号をすべて裏で引き継ぐ -->
-                        @foreach(request()->query() as $key => $value)
-                            @if($key !== 'id' && $key !== 'open_modal')
-                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-                            @endif
-                        @endforeach
-                        <!-- 詳細ボタンを押した時だけ送信されるデータ -->
-                        <input type="hidden" name="id" value="{{ $contact->id }}">
-                        <input type="hidden" name="open_modal" value="true">
-                        <button type="submit" class="detail-view">
-                            詳細
-                        </button>
-                    </form>
+                    <!-- 現在のページの検索条件とページ番号をすべて裏で引き継いでモーダル開く前と同じ状態を再現 -->
+                    @foreach(request()->query() as $key => $value)
+                        @if($key !== 'id' && $key !== 'modal_id')
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endif
+                    @endforeach
+                    <!-- 詳細ボタンを押した時だけ送信されるデータ -->
+                    <input type="hidden" name="id" value="{{ $contact->id }}">
+                    <input type="hidden" name="open_modal" value="true">
+                    <button type="submit" class="detail-view">
+                        詳細
+                    </button>
                 </form>
             </td>
         </tr>
-        <!-- モーダルやJSで呼び出すための隠しデータ -->
-        <input type="hidden" class="tel_get{{$contact->id}}" value="{{$contact->tel}}">
-        <input type="hidden" class="address_get{{$contact->id}}" value="{{$contact->address}}">
-        <input type="hidden" class="building_get{{$contact->id}}" value="{{$contact->building}}">
-        <input type="hidden" class="detail_get{{$contact->id}}" value="{{$contact->detail}}">
         @endforeach
+        
     </table>
 
     <!-- モーダル表示 -->
