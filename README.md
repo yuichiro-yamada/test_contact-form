@@ -25,4 +25,4 @@
 - nginx 1.21.1
 
 ## ER図
-![お問い合わせ管理システムER図](./erd.png)
+<img src="./erd.png" alt="お問い合わせ管理システムER図" width="800">
