@@ -19,11 +19,11 @@
 <div class="admin-container">
     <form action="/search" method="get">
         <div class="search-fields">
-                <input name="name_email_filter" type="text" class="name_email_filter input-box" 
+                <input name="name_email_filter" type="text" class="form-control name-email-filter input-box" 
                     placeholder="名前やメールアドレスを入力してください" 
                     value="{{ request('name_email_filter', '') }}">
             <div class="gender-wrapper">
-                <select name="gender_dropdown" class="gender_dropdown">
+                <select name="gender_dropdown" class="form-control gender-dropdown">
                     <option value="" {{ request('gender_dropdown') === null || request('gender_dropdown') === '' ? 'selected' : '' }}>
                         性別
                     </option>
@@ -43,7 +43,7 @@
             </div>
             <div class="category-wrapper">
                 <!--カテゴリ選択-->
-                <select name="category_dropdown" class="category_dropdown">
+                <select name="category_dropdown" class="form-control category-dropdown">
                     <option value="" {{ request('category_dropdown') === null || request('category_dropdown') === '' ? 'selected' : '' }}>
                         お問い合わせ種類
                     </option>
@@ -58,21 +58,18 @@
                 </select>
             </div>
             <div class="date-wrapper">
-                <input type="date" name="date_calendar" class="date_calendar" 
+                <input type="date" name="date_calendar" class="form-control calendar-dropdown" 
                     value="{{ request('date_calendar', '') }}" onclick="this.showPicker()">
             </div>
-            <button type="submit" class="submit-button">検索</button>
-
-            <button type="button" class="reset-button" onclick="location.href='/reset'">リセット</button>
+            <button type="submit" class="form-button submit-button">検索</button>
+            <button type="button" class="form-button reset-button" onclick="location.href='/reset'">リセット</button>
         </div>
-
             <div class="table-actions">
-                <button type="submit" class="export" formaction="/export">エクスポート</button>
+                <button type="submit" class="export-button" formaction="/export">エクスポート</button>
                 <div class="pagination-wrapper">
                     {{$contacts->appends(request()->query())->links()}}
                 </div>
             </div>
-
     </form>
     <table class="contacts-table" cellspacing="0">
         <tr>
@@ -106,14 +103,13 @@
                     <!-- 詳細ボタンを押した時だけ送信されるデータ -->
                     <input type="hidden" name="id" value="{{ $contact->id }}">
                     <input type="hidden" name="open_modal" value="true">
-                    <button type="submit" class="detail-view">
+                    <button type="submit" class="detail-button">
                         詳細
                     </button>
                 </form>
             </td>
         </tr>
         @endforeach
-        
     </table>
 
     <!-- モーダル表示 -->

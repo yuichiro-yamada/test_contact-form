@@ -1,4 +1,7 @@
-* {
+/* ==========================================
+   共通・基本設定
+   ========================================== */
+body {
     color: #82756A;
 }
 
@@ -12,72 +15,102 @@
     text-align: center;
 }
 
+/* ==========================================
+   ボタン・コントロール共通
+   ========================================== */
+button {
+    position: relative;
+    z-index: 10000;
+    cursor: pointer;
+}
+
+.form-control {
+    height: 43px;
+    padding: 0 30px 0 10px;
+    border: 1px solid #c0c0c0;
+    outline: none;
+    box-sizing: border-box;
+    background: #f5f5f5;
+    color: #82756A;
+    font-size: 14px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-button {
+    height: 43px;
+    width: 100px;
+    padding: 0 20px;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ==========================================
+   ヘッダー・検索フォーム領域
+   ========================================== */
 .logout-button {
-    display: inline-block;
-    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+    gap: 12px;
+    margin-bottom: 25px;
     background: #f5f5f5;
     color: #82756A;
     text-decoration: none;
     border: solid 1px #82756A;
 }
 
-.search-fields{
-    display:flex;
+.search-fields {
+    display: flex;
     justify-content: space-between;
-    margin-bottom:25px;
-    align-items:center;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
-.name_email_filter{
-    width:30%;
-    height: 40px;
-    /* 高さを明示的に指定 */
+.name-email-filter {
+    width: 30%;
     box-sizing: border-box;
-    /* 追加：高さを完全に統一する */
 }
 
-.name_email_filter,
-.gender_dropdown,
-.category_dropdown{
-    outline:none;
-    border:1px solid #c0c0c0;
-    padding:10px 30px 10px 10px;
-    -webkit-appearance: none;
-    appearance: none;
-    height:43px;
+.gender-dropdown {
+    width: 100px;
 }
 
-.date_calendar{
-    outline:none;
-    border:1px solid #c0c0c0;
-    padding:10px 30px 10px 10px;
+.category-dropdown {
+    width: 180px;
+}
+
+.calendar-dropdown {
+    width: 150px;
+    line-height: 43px;
+    outline: none;
+    border: 1px solid #c0c0c0;
+    padding: 10px 30px 10px 10px;
     background: #f5f5f5;
     cursor: default;
 }
 
-.date_calendar::-webkit-calendar-picker-indicator {
+.calendar-dropdown::-webkit-calendar-picker-indicator {
     opacity: 0;
     cursor: default;
     width: 20px;
     height: 15px;
 }
 
-.gender_dropdown,
-.category_dropdown,
-.date_calendar {
-    background:#f5f5f5;
-}
-
-/*選択ボックスの▼表示　基準点*/
+/* 選択ボックスの▼矢印装飾 */
 .gender-wrapper,
 .category-wrapper,
 .date-wrapper {
-    position:relative;
+    position: relative;
 }
-/*選択ボックスの▼表示　形づくり*/
+
 .gender-wrapper::before,
 .category-wrapper::before,
-.date-wrapper::before{
+.date-wrapper::before {
     content: "";
     width: 0;
     height: 0;
@@ -94,29 +127,116 @@
 .submit-button {
     background: #685E55;
     color: #fff;
-    width:80px;
-    height: 40px;
     box-sizing: border-box;
     border: none;
     outline: none;
-}
-
-button {
-    position: relative;
-    z-index: 10000;
-    cursor: pointer;
 }
 
 .reset-button {
     background: #A39588;
     color: #fff;
-    width: 80px;
-    height: 40px;
+    width: 100px;
     box-sizing: border-box;
     border: none;
     outline: none;
 }
 
+/* ==========================================
+   アクション行（エクスポート＆ページネーション）
+   ========================================== */
+.table-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.export-button {
+    width: 120px;
+    height: 35px;
+    color: #685E55;
+    outline: none;
+    background: #E2D8CC;
+    padding: 5px 10px;
+    border: solid 1px #c0c0c0;
+}
+
+/* ページネーション外枠 */
+.pagination-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+/* 不要テキストの非表示 */
+.pagination-wrapper p {
+    display: none;
+}
+
+.pagination-wrapper nav,
+.pagination-wrapper ul {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-wrapper nav {
+    margin: 0;
+}
+
+.pagination-wrapper ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* 各ページボタン */
+.pagination-wrapper a,
+.pagination-wrapper span {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #BAA899;
+    text-decoration: none;
+    color: #82756A;
+    background: #fff;
+    flex-shrink: 0;
+}
+
+/* 内部コンテナの右寄せ */
+.pagination-wrapper .shadow-sm {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 矢印アイコンのサイズ固定 */
+.pagination-wrapper svg {
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-block !important;
+    vertical-align: middle;
+}
+
+/* Laravelのスマホ用レイアウトを完全非表示 */
+.pagination-wrapper nav>div:first-child {
+    display: none !important;
+}
+
+/* 現在のページ（アクティブ）の配色設定を一箇所に集約 */
+span[aria-current="page"],
+span[aria-current="page"] span {
+    background: #82756A !important;
+    border-color: #82756A !important;
+    color: #fff !important;
+}
+
+/* ==========================================
+   データテーブル領域
+   ========================================== */
 .contacts-table {
     width: 100%;
     border: solid 1px #c0c0c0;
@@ -126,11 +246,11 @@ button {
     background-color: #f5f5f5;
 }
 
-.column-name{
-    text-align:left;
-    background:#82756A;
-    color:#fff;
-    padding:10px 30px;
+.column-name {
+    text-align: left;
+    background: #685E55;
+    color: #fff;
+    padding: 10px 30px;
     border-bottom: solid 1px #c0c0c0;
 }
 
@@ -138,114 +258,42 @@ button {
 .gender_get,
 .email_get,
 .category_get,
-.created_get{
-    padding:10px 30px;
-    border-bottom:solid 1px #c0c0c0;
+.created_get {
+    padding: 10px 30px;
+    border-bottom: solid 1px #c0c0c0;
 }
 
-.table-actions{
-    display:flex;
-    justify-content: space-between;
-    margin-bottom:20px;
+.detail_get {
+    width: 80px;
+    padding: 10px 15px;
+    border-bottom: solid 1px #c0c0c0;
 }
 
-.export{
-    outline:none;
-    background:#E2D8CC;
-    padding:5px 10px;
-    border:solid 1px #c0c0c0;
-}
-
-.flex-1,
-.pagination-wrapper p{
-    display:none;
-}
-
-.pagination-wrapper a,
-span[aria-current="page"],
-span[aria-label="&laquo;"]{
-    text-decoration:none;
-    display: inline-block;
-    height:19px;
-    width:19px;
-    padding: 3px;
-    border:solid 1px #BAA899;
-    text-align: center;
-    
-}
-
-span[aria-current="page"],
-span[aria-current="page"] span {
-    background: #82756A !important;  /* 現在のページの背景色 */
-    border-color: #82756A !important;/* 現在のページの枠線色 */
-    color: #fff !important;          /* 現在のページの文字色 */
-}
-
-svg{
-    width:15px;
-    height:24px;
-}
-
-.shadow-sm{
-    display:flex;
-    align-items:center;
-}
-
-span[aria-current="page"]{
-    background:#BAA899;
-}
-
-span[aria-current="page"] span{
-    color:#fff;
-}
-
-.search-button{
-    outline:none;
-    border:none;
-    background:transparent;
+.detail-button {
+    width: 60px;
+    height: 32px;
+    padding: 5px 10px;
+    margin: 0 auto;
+    outline: none;
+    background: #f5f5f5;
+    color: #BAA899;
     border: solid 1px #BAA899;
+    text-align: center;
 }
 
-.detail_get{
-    width:80px;
-    padding:10px 15px;
-    border-bottom:solid 1px #c0c0c0;
-}
-
-.detail-view{
-    padding:5px 10px;
-    margin:0 auto;
-    outline:none;
-    background:#f5f5f5;
-    color:#BAA899;
-    border:solid 1px #BAA899;
-    text-align:center;
-}
-
-.reset{
-    margin-top:40px;
-    text-align:center;
-}
-
-.reset-link{
-    outline:none;
-    border:none;
-    padding:10px 30px;
-    color:#fff;
-    background:#82756A;
-    height:unset;
-}
-
-.modal{
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    padding:80px 60px;
-    background-color:#FFFFFF;
+/* ==========================================
+   モーダルウィンドウ領域
+   ========================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 80px 60px;
+    background-color: #FFFFFF;
     border: 1px solid #8B7969;
-    box-shadow:1px 1px 2px;
+    box-shadow: 1px 1px 2px;
     z-index: 20000;
 }
 
@@ -253,65 +301,81 @@ span[aria-current="page"] span{
     display: block;
 }
 
-.close-button{
+.close-button {
     position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 32px;
-        height: 32px;
-        border: 1px solid #82756A;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        color: #82756A;
-        font-size: 18px;
-        font-weight: bold;
-        background-color: #fff;
-        cursor: pointer;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #82756A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #82756A;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #fff;
+    cursor: pointer;
 }
 
-.modal-title{
-    text-align:left;
-    width:250px;
-    color:#8B7969;
+.modal-title {
+    text-align: left;
+    width: 250px;
+    color: #8B7969;
 }
 
-.detail-title{
+.detail-title {
     vertical-align: top;
-    color:#8B7969;
+    color: #8B7969;
 }
 
-.modal-cell{
-    width:350px;
-    padding:10px 15px;
-    color:#8B7969;
+.modal-cell {
+    width: 350px;
+    padding: 10px 15px;
+    color: #8B7969;
 }
 
-.detail-text-modal{
-    width:100%;
-    min-height:100px;
-    font-family:sans-serif;
+.detail-text-modal {
+    width: 100%;
+    min-height: 100px;
+    font-family: sans-serif;
 }
 
-.delete{
-    text-align:center;
-    margin-top:40px;
+/* ==========================================
+   その他（削除・リセット・オートフィル補正）
+   ========================================== */
+.delete {
+    text-align: center;
+    margin-top: 40px;
 }
 
-.delete-button{
-    padding:10px 20px;
-    background:red;
-    color:#fff;
-    outline:none;
-    border:solid 1px #fff;
+.delete-button {
+    padding: 10px 20px;
+    background: red;
+    color: #fff;
+    outline: none;
+    border: solid 1px #fff;
+}
+
+.reset {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.reset-link {
+    outline: none;
+    border: none;
+    padding: 10px 30px;
+    color: #fff;
+    background: #82756A;
+    height: unset;
 }
 
 .input-box:-webkit-autofill,
 .input-box:-webkit-autofill:hover,
 .input-box:-webkit-autofill:focus {
-    /* 内側の影を使って、背景色を白（#ffffff）で塗りつぶす */
     -webkit-box-shadow: 0 0 0px 1000px #f5f5f5 inset;
     -webkit-text-fill-color: #82756A;
 }

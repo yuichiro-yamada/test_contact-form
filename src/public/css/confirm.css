@@ -1,101 +1,110 @@
-*{
-    color:#BAA899;
-    font-size:20px;
+/* ==========================================
+   1. 共通・基本設定
+   ========================================== */
+* {
+    color: #82756A;
+    font-size: 20px;
 }
 
-.page-title{
-    display:block;
-    text-align:center;
-    font-size:30px;
-    margin-bottom:30px;
+.page-title {
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #82756A;
 }
 
-.confirm-contact{
-    width:80%;
-    margin:0 auto;
-}
-
-.read-input{
-    width:80%;
-    height:100%;
-    outline:none;
-    border:none;
-    padding:15px 30px;
-    font-family:sans-serif;
-    resize:none;
-}
-
-.read-text {
-    display: inline-block;
-    /* 👈 これによって2行目以降もpaddingが正常に効きます */
+.confirm-contact {
     width: 80%;
-    padding: 15px 30px;
-    font-family: sans-serif;
-    box-sizing: border-box;
-    /* 👈 余白を含めた横幅を正確に計算する安全装置 */
-    vertical-align: middle;
+    margin: 0 auto;
 }
 
-/* お問い合わせ内容（複数行）の専用スタイル */
-.text-area-view {
-    line-height: 1.6;
-    /* 行間を少し広げて読みやすくします */
-    white-space: normal;
-    /* 文字の折り返しを正常化します */
-    vertical-align: top;
-    /* お問い合わせ内容の文字をセルの「上揃え」にします */
-}
 
-.confirm-table{
+/* ==========================================
+   2. テーブル・セルレイアウト設定
+   ========================================== */
+.confirm-table {
     width: 90%;
     margin: 0 auto;
 }
 
-.table-line{
-    margin:10px 0;
+.table-line {
+    margin: 10px 0;
 }
 
-.column-name{
-    text-align:left;
-    width:40%;
-    background:#BAA899;
-    color:#fff;
-    border:solid 1px #c0c0c0;
-    padding-left:50px;
-    align-items:center;
+.column-name {
+    text-align: left;
+    width: 40%;
+    background: #82756A;
+    color: #fff !important;
+    border: solid 1px #c0c0c0;
+    padding-left: 50px;
+    align-items: center;
+    font-weight: normal;
 }
 
-.table-cell{
-    width:550px;
-    border:solid 1px #c0c0c0;
+.table-cell {
+    width: 550px;
+    border: solid 1px #c0c0c0;
 }
 
+
+/* ==========================================
+   3. 入力値の表示（確認エリア）設定
+   ========================================== */
+.read-input {
+    width: 80%;
+    height: 100%;
+    outline: none;
+    border: none;
+    padding: 15px 30px;
+    font-family: sans-serif;
+    resize: none;
+    color: #82756A;
+}
+
+.read-text {
+    display: inline-block;
+    width: 80%;
+    padding: 15px 30px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    vertical-align: middle;
+    color: #82756A;
+}
+
+.text-area-view {
+    line-height: 1.6;
+    white-space: normal;
+    vertical-align: top;
+}
+
+
+/* ==========================================
+   4. ボタン・フォーム送信設定
+   ========================================== */
+.buttons,
+.fix-area {
+    text-align: center;
+}
 
 .submit-button,
-.back-button{
-    outline:none;
-    border:none;
-    padding:10px 30px;
-    height:unset;
+.back-button {
+    outline: none;
+    border: none;
+    padding: 10px 30px;
+    height: unset;
+    cursor: pointer;
 }
 
-.buttons,
-.fix-area{
-    text-align:center;
+.submit-button {
+    color: #fff !important;
+    background: #82756A;
+    margin: 40px 0;
 }
 
-
-.submit-button{
-    color:#fff;
-    background:#82756A;
-    margin:40px 0;
+.back-button {
+    color: #82756A !important;
+    background: #fff;
+    border: solid 1px #82756A;
 }
-
-.back-button{
-    color:#BAA899;
-    background:#fff;
-    border:solid 1px #82756A;
-}
-
-
-
