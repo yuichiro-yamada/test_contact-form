@@ -60,8 +60,9 @@ class ContactFactory extends Factory
             'gender' => $this->faker->numberBetween(1, 3),
             'email' => $this->faker->unique()->safeEmail(),       // 重複エラー対策
             'tel' => $this->faker->unique()->phoneNumber(),       // 重複エラー対策
-            'address' => $this->faker->address(),
-            'building' => $this->faker->optional(0.7)->realText(10) . ' ' . $this->faker->optional(0.7)->secondaryAddress(),
+            // 変更点：都道府県 ＋ 市区町村 ＋ 番地（建物名なし）を結合して生成
+            'address' => $this->faker->prefecture() . $this->faker->city() . $this->faker->streetAddress(),
+            'building' => $this->faker->optional(0.8)->secondaryAddress(),
             'detail' => $detail
         ];
     }
